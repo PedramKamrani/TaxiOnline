@@ -1,0 +1,441 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+    <link href="~/css/dashboard/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/dashboard/bootstrap-rtl.min.css" rel="stylesheet" />
+    <link href="~/css/dashboard/animate.min.css" rel="stylesheet" />
+    <link href="~/css/dashboard/light-bootstrap-dashboard.css" rel="stylesheet" />
+    <link href="~/css/dashboard/light-bootstrap-dashboard-rtl.css" rel="stylesheet" />
+
+
+    <!--     Fonts and icons     -->
+
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/earlyaccess/droidarabickufi.css' rel='stylesheet' type='text/css'>
+
+    <link href="~/css/dashboard/pe-icon-7-stroke.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="wrapper">
+        <div class="sidebar" data-color="green" data-image="/img/sidebar-bg.jpg">
+
+            <div class="sidebar-wrapper">
+                <div class="logo">
+                    <a href="/" class="simple-text">
+                        مدیریت اسنپ
+                    </a>
+                </div>
+
+                <ul class="nav">
+                    <li class="active">
+                        <a href="dashboard.html">
+                            <i class="pe-7s-graph"></i>
+                            <p>داشبورد</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="user.html">
+                            <i class="pe-7s-user"></i>
+                            <p>خودرو ها</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="table.html">
+                            <i class="pe-7s-note2"></i>
+                            <p>لیست</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="typography.html">
+                            <i class="pe-7s-news-paper"></i>
+                            <p>تایپوگرافی</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="icons.html">
+                            <i class="pe-7s-science"></i>
+                            <p>آیکون‌ها</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="maps.html">
+                            <i class="pe-7s-map-marker"></i>
+                            <p>نقشه ها</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="notifications.html">
+                            <i class="pe-7s-bell"></i>
+                            <p>اعلانات</p>
+                        </a>
+                    </li>
+                    <li class="active-pro">
+                        <a href="upgrade.html">
+                            <i class="pe-7s-rocket"></i>
+                            <p>ارتقا به پیشرفته</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="main-panel">
+            <nav class="navbar navbar-default navbar-fixed">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                            <span class="sr-only">تعویض ناوبری</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">داشبورد</a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-dashboard"></i>
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-globe"></i>
+                                    <b class="caret"></b>
+                                    <span class="notification">۳</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">اعلان 1</a></li>
+                                    <li><a href="#">اعلان 2</a></li>
+                                    <li><a href="#">اعلانی دیگر</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="fa fa-search"></i>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-left">
+                            <li>
+                                <a href="">
+                                    حساب کاربری
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    کشویی
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">واکنش</a></li>
+                                    <li><a href="#">واکنشی دیگر</a></li>
+                                    <li><a href="#">چیزی</a></li>
+                                    <li><a href="#">واکنش دیگر</a></li>
+                                    <li><a href="#">چیزی</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">لینک جداشده</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    خروج
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+
+            <div class="content">
+                <div class="container-fluid">
+                    @RenderBody()
+                </div>
+            </div>
+
+            @*<div class="content">
+            <div class="container-fluid">
+            <div class="row">
+            <div class="col-md-4">
+            <div class="card">
+            <div class="header">
+            <h4 class="title">آمار ایمیل ها</h4>
+            <p class="category">تاریخ آخرین عملکرد کمپین</p>
+            </div>
+            <div class="content">
+            <div id="chartPreferences" class="ct-chart ct-perfect-fourth"></div>
+
+            <div class="footer">
+            <div class="legend">
+            <i class="fa fa-circle text-info"></i> بازکردن
+            <i class="fa fa-circle text-danger"></i> پرش
+            <i class="fa fa-circle text-warning"></i> لغو اشتراک
+            </div>
+            <hr>
+            <div class="stats">
+            <i class="fa fa-clock-o"></i> کمپین فرستاده شده 2 روز پیش
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+
+            <div class="col-md-8">
+            <div class="card">
+            <div class="header">
+            <h4 class="title">رفتار کاربران</h4>
+            <p class="category">عملکرد 24 ساعت قبل</p>
+            </div>
+            <div class="content">
+            <div id="chartHours" class="ct-chart"></div>
+            <div class="footer">
+            <div class="legend">
+            <i class="fa fa-circle text-info"></i> بازکردن
+            <i class="fa fa-circle text-danger"></i> کلیک
+            <i class="fa fa-circle text-warning"></i> ثانیه های کلیک کردن
+            </div>
+            <hr>
+            <div class="stats">
+            <i class="fa fa-history"></i> ویرایش شده 3 دقیقه پیش
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+
+
+
+            <div class="row">
+            <div class="col-md-6">
+            <div class="card ">
+            <div class="header">
+            <h4 class="title">فروش ۱۳۹۵</h4>
+            <p class="category">همه محصولات با احتساب مالیات</p>
+            </div>
+            <div class="content">
+            <div id="chartActivity" class="ct-chart"></div>
+
+            <div class="footer">
+            <div class="legend">
+            <i class="fa fa-circle text-info"></i> تسلا مدل S
+            <i class="fa fa-circle text-danger"></i> BMW سری 5
+            </div>
+            <hr>
+            <div class="stats">
+            <i class="fa fa-check"></i> اطلاعات داده ها گواهی
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+
+            <div class="col-md-6">
+            <div class="card ">
+            <div class="header">
+            <h4 class="title">وظایف</h4>
+            <p class="category">توسعه بخش مدیریت</p>
+            </div>
+            <div class="content">
+            <div class="table-full-width">
+            <table class="table">
+            <tbody>
+            <tr>
+            <td>
+            <label class="checkbox">
+            <input type="checkbox" value="" data-toggle="checkbox">
+            </label>
+            </td>
+            <td>قرارداد برای ثبت نام "سازمان دهندگان کنفرانس ترس از چیست؟""</td>
+            <td class="td-actions text-right">
+            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+            <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+            <i class="fa fa-times"></i>
+            </button>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <label class="checkbox">
+            <input type="checkbox" value="" data-toggle="checkbox" checked="">
+            </label>
+            </td>
+            <td>خطوط از ادبیات بزرگ روسیه؟ و یا ایمیل از رئیس من؟</td>
+            <td class="td-actions text-right">
+            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+            <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+            <i class="fa fa-times"></i>
+            </button>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <label class="checkbox">
+            <input type="checkbox" value="" data-toggle="checkbox" checked="">
+            </label>
+            </td>
+            <td>
+            آب گرفتگی: یک سال بعد، ارزیابی آنچه از دست رفته بود و زمانی که باران تخریب در نوردید مترو دیترویت چه شد
+            </td>
+            <td class="td-actions text-right">
+            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+            <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+            <i class="fa fa-times"></i>
+            </button>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <label class="checkbox">
+            <input type="checkbox" value="" data-toggle="checkbox">
+            </label>
+            </td>
+            <td>درست 4 تجربه کاربر نامرئی شما هرگز نمی دانستند درباره</td>
+            <td class="td-actions text-right">
+            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+            <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+            <i class="fa fa-times"></i>
+            </button>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <label class="checkbox">
+            <input type="checkbox" value="" data-toggle="checkbox">
+            </label>
+            </td>
+            <td>خوانده شده "زیر را می سازد متوسط بهتر"</td>
+            <td class="td-actions text-right">
+            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+            <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+            <i class="fa fa-times"></i>
+            </button>
+            </td>
+            </tr>
+            <tr>
+            <td>
+            <label class="checkbox">
+            <input type="checkbox" value="" data-toggle="checkbox">
+            </label>
+            </td>
+            <td>دنبال کردن 5 دشمنان را از توییتر</td>
+            <td class="td-actions text-right">
+            <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-simple btn-xs">
+            <i class="fa fa-edit"></i>
+            </button>
+            <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-simple btn-xs">
+            <i class="fa fa-times"></i>
+            </button>
+            </td>
+            </tr>
+            </tbody>
+            </table>
+            </div>
+
+            <div class="footer">
+            <hr>
+            <div class="stats">
+            <i class="fa fa-history"></i> ویرایش شده 3 دقیقه پیش
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>*@
+
+
+            @*<footer class="footer">
+            <div class="container-fluid">
+            <nav class="pull-right">
+            <ul>
+            <li>
+            <a href="#">
+            خانه
+            </a>
+            </li>
+            <li>
+            <a href="#">
+            شرکت
+            </a>
+            </li>
+            <li>
+            <a href="#">
+            نمونه کار ها
+            </a>
+            </li>
+            <li>
+            <a href="#">
+            بلاگ
+            </a>
+            </li>
+            </ul>
+            </nav>
+            <p class="copyright pull-left">
+            ۱۳۹۵ &copy; راست‌به‌چپ شده توسط <a href="http://google.com">پدرام</a>
+            </p>
+            </div>
+            </footer>*@
+
+        </div>
+    </div>
+
+
+
+    <script src="~/js/dashboard/jquery-1.10.2.js"></script>
+    <script src="~/js/dashboard/bootstrap.min.js"></script>
+    <script src="~/js/dashboard/bootstrap-checkbox-radio-switch.js"></script>
+    <script src="~/js/dashboard/chartist.min.js"></script>
+    <script src="~/js/dashboard/bootstrap-notify.js"></script>
+    <script src="~/js/dashboard/light-bootstrap-dashboard.js"></script>
+    <script src="~/js/dashboard/demo.js"></script>
+
+@await RenderSectionAsync("mySection", false)
+
+@*<script type="text/javascript">
+    $(document).ready(function () {
+
+    demo.initChartist();
+
+    $.notify({
+    icon: 'pe-7s-gift',
+    message: "به صفحه نور بوت استرپ خوش آمدید - هدیه زیبا برای هر توسعه دهنده وب است."
+
+    }, {
+    type: 'info',
+    timer: 4000,
+    placement: {
+    from: 'top',
+    align: 'left'
+    }
+    });
+
+    });
+    </script>*@
+
+</body>
+
+
+</html>

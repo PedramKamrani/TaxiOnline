@@ -1,0 +1,19 @@
+﻿body {
+    direction: rtl;
+    font-family: 'B Yekan', Tahoma;
+    background-color: white;
+    margin: auto;
+}
+
+.first-row {
+    background-color: #06df6f;    
+}
+
+.first-col {
+    padding-bottom: 80px;
+    padding-top: 80px;
+}
+
+.second-row {
+    padding-top: 25px;
+}

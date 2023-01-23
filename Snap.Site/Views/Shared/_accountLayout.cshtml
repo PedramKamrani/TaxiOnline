@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    
+    <link href="~/css/bootstrap-rtl.min.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/css/account.css" rel="stylesheet" />
+</head>
+<body>
+
+<div class="container-fluid">
+
+    <div class="row first-row">
+
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 first-col">
+
+            <a href="/">
+                <img src="~/img/Snapp_White.png" alt="اسنپ" class="img-responsive" style="margin: auto" />
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="row second-row">
+
+        <div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2 col-xs-8 col-xs-offset-2">
+            @RenderBody()
+        </div>
+
+    </div>
+
+</div>
+
+<script src="~/js/jquery-1.9.1.min.js"></script>
+<script src="~/js/bootstrap-rtl.min.js"></script>
+
+@await RenderSectionAsync("mySection", false)
+</body>
+</html>
