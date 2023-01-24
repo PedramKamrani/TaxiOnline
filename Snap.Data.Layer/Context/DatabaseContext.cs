@@ -15,6 +15,8 @@ namespace Snap.Data.Layer.Context
         public DbSet<UserDetail> UserDetails { get; set; }
         public DbSet<Driver>Drivers { get; set; }
         public DbSet<Car> Car { get; set; }
-        public DbSet<Color>Colors { get; set; }
+        public DbSet<Color?> Colors { get; set; }
+        public DbSet<RateType?> RateTypes { get; set; }
+        public DbSet<Settings> Settings { get; set; }
     }
 }

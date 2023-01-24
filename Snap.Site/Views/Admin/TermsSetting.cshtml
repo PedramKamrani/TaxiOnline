@@ -1,0 +1,62 @@
+﻿@model Snapp.Core.ViewModels.Admin.TermsSettingViewModel
+
+@{
+    ViewData["Title"] = "تنظیمات شرایط و قوانین";
+    Layout = "~/Views/Shared/_dashboardLayout.cshtml";
+}
+
+@if (ViewBag.IsSuccess == true)
+{
+    <script src="~/js/sweet.js"></script>
+    <script>
+        swal("پیغام", "تغییرات با موفقیت انجام شد", "success", {
+            button: "متوجه شدم",
+        });
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right">تنظیمات شرایط و قوانین</h4>
+                <h4 class="title pull-left">
+                    <a href="/Admin/Index" class="btn btn-danger">
+                        بازگشت
+                    </a>
+                </h4>
+            </div>
+            <div class="clearfix"></div>
+            <div class="content">
+                <form asp-action="TermsSetting">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Terms" class=""></label>
+                        <textarea asp-for="Terms" class="form-control"></textarea>
+                        <span asp-validation-for="Terms" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="ذخیره و بازگشت" class="btn btn-info btn-fill" />
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section mySection
+{
+
+    <script src="~/ckeditor/ckeditor.js"></script>
+    <script src="~/ckeditor/adapters/jquery.js"></script>
+
+    <script>
+        $(function () {
+            $('#Terms').ckeditor();
+        });
+    </script>
+
+}
+

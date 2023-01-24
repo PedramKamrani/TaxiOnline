@@ -1,0 +1,62 @@
+﻿@model Snapp.Core.ViewModels.Admin.SiteSettingViewModel
+
+@{
+    ViewData["Title"] = "تنظیمات سایت";
+    Layout = "~/Views/Shared/_dashboardLayout.cshtml";
+}
+
+@if (ViewBag.IsSuccess == true)
+{
+    <script src="~/js/sweet.js"></script>
+    <script>
+        swal("پیغام", "تغییرات با موفقیت انجام شد", "success", {
+            button: "متوجه شدم",
+        });
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right">تنظیمات سایت</h4>
+                <h4 class="title pull-left">
+                    <a href="/Admin/Index" class="btn btn-danger">
+                        بازگشت
+                    </a>
+                </h4>
+            </div>
+            <div class="clearfix"></div>
+            <div class="content">
+                <form asp-action="SiteSetting">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class=""></label>
+                        <input asp-for="Name" class="form-control" placeholder="نام یا عنوان سایت" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Desc" class=""></label>
+                        <textarea asp-for="Desc" class="form-control" placeholder="توضیحات موتور جستجو"></textarea>
+                        <span asp-validation-for="Desc" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tel" class=""></label>
+                        <input asp-for="Tel" class="form-control" placeholder="شماره تماس" />
+                        <span asp-validation-for="Tel" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Fax" class=""></label>
+                        <input asp-for="Fax" class="form-control" placeholder="شماره فکس" />
+                        <span asp-validation-for="Fax" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="ذخیره و بازگشت" class="btn btn-info btn-fill" />
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
