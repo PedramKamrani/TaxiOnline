@@ -11,6 +11,9 @@ namespace Snap.Data.Layer.Entities
         [Display(Name = "رنگ")]
         public string Name { get; set; }
 
+        [Display(Name = "کدرنگ")]
+        public string Code { get; set; }
+
         public virtual ICollection<Driver>Drivers { get; set; }
     }
 }

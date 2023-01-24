@@ -12,8 +12,8 @@ using Snap.Data.Layer.Context;
 namespace Snap.Data.Layer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20230123054905_Add Driver TB")]
-    partial class AddDriverTB
+    [Migration("20230124052045_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,13 +44,17 @@ namespace Snap.Data.Layer.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Color");
+                    b.ToTable("Colors");
                 });
 
             modelBuilder.Entity("Snap.Data.Layer.Entities.Driver", b =>
@@ -67,6 +71,7 @@ namespace Snap.Data.Layer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("CarId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
@@ -98,7 +103,7 @@ namespace Snap.Data.Layer.Migrations
 
                     b.HasIndex("ColorId");
 
-                    b.ToTable("Driver");
+                    b.ToTable("Drivers");
                 });
 
             modelBuilder.Entity("Snap.Data.Layer.Entities.Role", b =>
@@ -186,7 +191,9 @@ namespace Snap.Data.Layer.Migrations
                 {
                     b.HasOne("Snap.Data.Layer.Entities.Car", "Car")
                         .WithMany("Drivers")
-                        .HasForeignKey("CarId");
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Snap.Data.Layer.Entities.Color", "Color")
                         .WithMany("Drivers")

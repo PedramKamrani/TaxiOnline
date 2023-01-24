@@ -33,7 +33,7 @@ namespace Snap.Data.Layer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Car", (string)null);
+                    b.ToTable("Car");
                 });
 
             modelBuilder.Entity("Snap.Data.Layer.Entities.Color", b =>
@@ -41,13 +41,17 @@ namespace Snap.Data.Layer.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Color", (string)null);
+                    b.ToTable("Colors");
                 });
 
             modelBuilder.Entity("Snap.Data.Layer.Entities.Driver", b =>
@@ -64,6 +68,7 @@ namespace Snap.Data.Layer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("CarId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
@@ -95,7 +100,7 @@ namespace Snap.Data.Layer.Migrations
 
                     b.HasIndex("ColorId");
 
-                    b.ToTable("Driver", (string)null);
+                    b.ToTable("Drivers");
                 });
 
             modelBuilder.Entity("Snap.Data.Layer.Entities.Role", b =>
@@ -115,7 +120,7 @@ namespace Snap.Data.Layer.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Snap.Data.Layer.Entities.User", b =>
@@ -150,7 +155,7 @@ namespace Snap.Data.Layer.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Snap.Data.Layer.Entities.UserDetail", b =>
@@ -176,14 +181,16 @@ namespace Snap.Data.Layer.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("UserDetails", (string)null);
+                    b.ToTable("UserDetails");
                 });
 
             modelBuilder.Entity("Snap.Data.Layer.Entities.Driver", b =>
                 {
                     b.HasOne("Snap.Data.Layer.Entities.Car", "Car")
                         .WithMany("Drivers")
-                        .HasForeignKey("CarId");
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Snap.Data.Layer.Entities.Color", "Color")
                         .WithMany("Drivers")
