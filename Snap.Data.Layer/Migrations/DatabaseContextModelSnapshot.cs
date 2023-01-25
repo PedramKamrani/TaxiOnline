@@ -103,6 +103,54 @@ namespace Snap.Data.Layer.Migrations
                     b.ToTable("Drivers");
                 });
 
+            modelBuilder.Entity("Snap.Data.Layer.Entities.MonthType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("End")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<float>("Precent")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Start")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MonthTypes");
+                });
+
+            modelBuilder.Entity("Snap.Data.Layer.Entities.PriceType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("End")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<long>("Price")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Start")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PriceTypes");
+                });
+
             modelBuilder.Entity("Snap.Data.Layer.Entities.RateType", b =>
                 {
                     b.Property<Guid>("Id")
@@ -167,6 +215,10 @@ namespace Snap.Data.Layer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tel")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

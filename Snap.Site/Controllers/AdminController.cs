@@ -2,7 +2,6 @@
 using Snap.Core.Interface;
 using Snap.Core.ViewModels.Admin;
 using Snap.Data.Layer.Entities;
-using Snap.Data.Layer.Migrations;
 
 namespace Snap.Site.Controllers
 {
@@ -19,16 +18,22 @@ namespace Snap.Site.Controllers
         {
             return View();
         }
+
+        #region Setting
+
+
+
+
         public async Task<IActionResult> SiteSetting()
         {
             Settings setting = await _service.GetSiteSetting();
 
             SiteSettingViewModel viewModel = new SiteSettingViewModel()
             {
-                Desc = setting.Description,
-                Fax = setting.Fax,
-                Name = setting.Name,
-                Tel = setting.Tel
+                Desc = setting?.Description ?? "",
+                Fax = setting?.Fax ?? "",
+                Name = setting?.Name ?? "",
+                Tel = setting?.Tel ?? ""
             };
 
             ViewBag.IsSuccess = false;
@@ -39,6 +44,7 @@ namespace Snap.Site.Controllers
         [HttpPost]
         public IActionResult SiteSetting(SiteSettingViewModel viewModel)
         {
+
             if (ModelState.IsValid)
             {
                 bool result = _service.UpdateSetting(viewModel);
@@ -131,6 +137,6 @@ namespace Snap.Site.Controllers
             return View(viewModel);
         }
 
-
+        #endregion
     }
 }

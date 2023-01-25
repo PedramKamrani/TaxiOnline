@@ -48,7 +48,8 @@
 </div>
 
 @section mySection
-    {
+{
+    <script src="~/js/sweet.js"></script>
     <script>
         $(document).ready(function () {
             $("#mySearch").on("keyup", function () {
@@ -58,6 +59,23 @@
                 });
             });
         });
+    </script>
+    
+    <script>
+        function myDelete(id) {
+            swal({
+                title: "تأیید حذف",
+                text: "آیا از حذف این مقدار اطمینان دارید؟",
+                icon: "warning",
+                buttons: ['لغو', 'بلی'],
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.open('/Car/Delete/' + id, '_parent');
+                    }
+                });
+        }
     </script>
 }
 

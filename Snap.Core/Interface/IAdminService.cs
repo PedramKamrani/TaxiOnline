@@ -44,6 +44,32 @@ namespace Snap.Core.Interface
 
 
         #endregion
+
+        #region PriceType
+
+        Task<List<PriceType>> GetPricesType();
+        Task<PriceType> GetPricesBy(Guid id);
+        void AddPrice(PriceTypeViewModel priceTypeViewModel);
+         Task<bool> EditPriceType(Guid id, PriceTypeViewModel priceSettingViewModel);
+        Task<bool> DeletePriceType(Guid id);
+
+        #endregion
+
+        #region MonthType
+
+        Task<List<MonthType>> GetMonthTypes();
+
+        Task<MonthType> GetMonthTypeById(Guid id);
+
+        void AddMonthType(MonthTypeViewModel viewModel);
+
+        bool UpdateMonthType(MonthTypeViewModel viewModel, Guid id);
+
+        void DeleteMonthType(Guid id);
+
+        #endregion
+
+
     }
 
 }

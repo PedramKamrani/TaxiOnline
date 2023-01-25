@@ -1,0 +1,105 @@
+﻿@model IEnumerable<Snap.Data.Layer.Entities.PriceType>
+@{
+    ViewData["Title"] = "نمایش تعرفه ها";
+    Layout = "~/Views/Shared/_dashboardLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right">تعرفه ها</h4>
+                <h4 class="title pull-left">
+                    <a href="/PriceType/Create" class="btn btn-success">جدید</a>
+                </h4>
+                <div class="clearfix"></div>
+                <br />
+                <input type="text" class="form-control" placeholder="جستجو تعرفه ..." id="mySearch" />
+            </div>
+            <div class="content table-responsive table-full-width">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Start)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.End)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Price)
+                            </th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Start)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.End)
+                                </td>
+                                <td>
+                                    @item.Price.ToString("n0") ریال
+                                </td>
+                                <td>
+                                    <a href="/PriceType/Edit/@item.Id" class="btn btn-xs btn-warning">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="#" onclick="myDelete('@item.Id')" class="btn btn-xs btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section mySection
+    {
+    <script src="~/js/sweet.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#mySearch").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <script>
+        function myDelete(id) {
+            swal({
+                title: "تأیید حذف",
+                text: "آیا از حذف این مقدار اطمینان دارید؟",
+                icon: "warning",
+                buttons: ['لغو', 'بلی'],
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.open('/PriceType/Delete/' + id, '_parent');
+                    }
+                });
+        }
+    </script>
+}
+
+
