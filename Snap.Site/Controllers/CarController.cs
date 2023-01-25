@@ -70,7 +70,7 @@ namespace Snap.Site.Controllers
                     var rowCount=worksheet.Dimension.Rows;
                     for (int i = 2; i < rowCount; i++)
                     {
-                        CarViewModel view = new CarViewModel
+                        CarViewModel view = new()
                         {
                             Name = worksheet.Cells[i,1].Value.ToString().Trim(),
                         };
