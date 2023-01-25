@@ -20,5 +20,7 @@ namespace Snap.Data.Layer.Context
         public DbSet<Settings> Settings { get; set; }
         public DbSet<PriceType> PriceTypes { get; set; }
         public DbSet<MonthType> MonthTypes { get; set; }
+        public DbSet<Humidity> Humidities { get; set; }
+        public DbSet<Temperature> Temperatures { get; set; }
     }
 }

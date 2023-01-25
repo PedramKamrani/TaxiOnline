@@ -69,6 +69,33 @@ namespace Snap.Core.Interface
 
         #endregion
 
+        #region Humidity
+
+        Task<List<Humidity>> GetHumiditys();
+
+        Task<Humidity> GetHumidityById(Guid id);
+
+        void AddHumidity(MonthTypeViewModel viewModel);
+
+        bool UpdateHumidity(MonthTypeViewModel viewModel, Guid id);
+
+        void DeleteHumidity(Guid id);
+
+        #endregion
+
+        #region Temperature
+
+        Task<List<Temperature>> GetTemperatures();
+
+        Task<Temperature> GetTemperatureById(Guid id);
+
+        void AddTemperature(MonthTypeViewModel viewModel);
+
+        bool UpdateTemperature(MonthTypeViewModel viewModel, Guid id);
+
+        void DeleteTemperature(Guid id);
+
+        #endregion
 
     }
 

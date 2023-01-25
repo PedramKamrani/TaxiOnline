@@ -1,6 +1,7 @@
-﻿@model IEnumerable<Snap.Core.ViewModels.Admin.CarViewModel>
+﻿@model IEnumerable<Snap.Data.Layer.Entities.Temperature>
+
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "نمایش تعرفه های دما هوا";
     Layout = "~/Views/Shared/_dashboardLayout.cshtml";
 }
 
@@ -8,20 +9,30 @@
     <div class="col-md-12">
         <div class="card">
             <div class="header">
-                <h4 class="title pull-right">خودرو ها</h4>
+                <h4 class="title pull-right">تعرفه های دما هوا</h4>
                 <h4 class="title pull-left">
-                    <a href="/Car/Create" class="btn btn-success">جدید</a>
-                    <a href="/Car/ImportFile" class="btn btn-success">ثبت گروهی</a>
+                    <a href="/Temperature/Create" class="btn btn-success">جدید</a>
                 </h4>
                 <div class="clearfix"></div>
                 <br />
-                <input type="text" class="form-control" placeholder="جستجو خودرو ..." id="mySearch" />
+                <input type="text" class="form-control" placeholder="جستجو ..." id="mySearch" />
             </div>
             <div class="content table-responsive table-full-width">
                 <table class="table table-hover table-striped">
                     <thead>
                         <tr>
-                            <th>@Html.DisplayNameFor(model => model.Name)</th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Start)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.End)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Precent)
+                            </th>
                             <th>عملیات</th>
                         </tr>
                     </thead>
@@ -29,12 +40,23 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@Html.DisplayFor(model => item.Name)</td>
                                 <td>
-                                    <a href="/Car/Edit/@item.CarId" class="btn btn-xs btn-warning">
+                                    @Html.DisplayFor(model => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Start)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.End)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Precent)
+                                </td>
+                                <td>
+                                    <a href="/Temperature/Edit/@item.Id" class="btn btn-xs btn-warning">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="/Car/Delete/@item.CarId" class="btn btn-xs btn-danger">
+                                    <a href="#" onclick="myDelete('@item.Id')" class="btn btn-xs btn-danger">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
@@ -49,8 +71,9 @@
 </div>
 
 @section mySection
-{
+    {
     <script src="~/js/sweet.js"></script>
+
     <script>
         $(document).ready(function () {
             $("#mySearch").on("keyup", function () {
@@ -61,7 +84,7 @@
             });
         });
     </script>
-    
+
     <script>
         function myDelete(id) {
             swal({
@@ -73,11 +96,10 @@
             })
                 .then((willDelete) => {
                     if (willDelete) {
-                        window.open('/Car/Delete/' + id, '_parent');
+                        window.open('/Temperature/Delete/' + id, '_parent');
                     }
                 });
         }
     </script>
 }
-
 

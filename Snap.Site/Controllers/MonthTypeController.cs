@@ -4,11 +4,11 @@ using Snap.Core.ViewModels.Admin;
 
 namespace Snap.Site.Controllers
 {
-    public class MonthsTypeController : Controller
+    public class MonthTypeController : Controller
     {
         private readonly IAdminService _service;
 
-        public MonthsTypeController(IAdminService service)
+        public MonthTypeController(IAdminService service)
         {
             _service = service;
         }
@@ -18,7 +18,7 @@ namespace Snap.Site.Controllers
 
             return View(result);
         }
-
+        [HttpGet]
         public IActionResult Create()
         {
             return View();

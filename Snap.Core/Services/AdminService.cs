@@ -4,6 +4,7 @@ using Snap.Core.Interface;
 using Snap.Core.ViewModels.Admin;
 using Snap.Data.Layer.Context;
 using Snap.Data.Layer.Entities;
+using System.Linq;
 using RateType = Snap.Data.Layer.Entities.RateType;
 
 namespace Snap.Core.Services
@@ -327,7 +328,7 @@ namespace Snap.Core.Services
                 End =colorAdminViewModel.End,
                 Start = colorAdminViewModel.Start,
                 Id = CodeGenerators.GetId(),
-                Precent = colorAdminViewModel.End
+                Precent = colorAdminViewModel.Percent
             };
             _context.Add(model);
             SaveAsync();
@@ -335,14 +336,14 @@ namespace Snap.Core.Services
 
         public bool UpdateMonthType(MonthTypeViewModel viewModel, Guid id)
         {
-            var entity=_context.MonthTypes.Find(id);
+            var entity= _context.MonthTypes.AsNoTracking().FirstOrDefault(x=>x.Id==id);
             var model = new MonthType
             {
                End = viewModel.End,
                Start = viewModel.Start,
                Name = viewModel.Name,
                Precent = viewModel.Percent,
-               Id = entity.Id
+               Id =id
             };
             _context.Update(model);
             SaveAsync();
@@ -364,7 +365,123 @@ namespace Snap.Core.Services
         #endregion
 
 
+        #region Humidity
 
+
+        public async Task<List<Humidity>> GetHumiditys()
+        {
+            return await _context.Humidities.OrderBy(h => h.Name).ToListAsync();
+        }
+
+        public async Task<Humidity> GetHumidityById(Guid id)
+        {
+            return await _context.Humidities.FindAsync(id);
+        }
+
+        public void AddHumidity(MonthTypeViewModel viewModel)
+        {
+            Humidity humidity = new Humidity()
+            {
+                End = viewModel.End,
+                Id = CodeGenerators.GetId(),
+                Name = viewModel.Name,
+                Precent = viewModel.Percent,
+                Start = viewModel.Start
+            };
+
+            _context.Humidities.Add(humidity);
+            _context.SaveChanges();
+        }
+
+        public bool UpdateHumidity(MonthTypeViewModel viewModel, Guid id)
+        {
+            Humidity humidity = _context.Humidities.Find(id);
+
+            if (humidity != null)
+            {
+                humidity.End = viewModel.End;
+                humidity.Name = viewModel.Name;
+                humidity.Precent = viewModel.Percent;
+                humidity.Start = viewModel.Start;
+
+                _context.SaveChanges();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void DeleteHumidity(Guid id)
+        {
+            Temperature temperature = _context.Temperatures.Find(id);
+
+            if (temperature != null)
+            {
+                _context.Temperatures.Remove(temperature);
+                _context.SaveChanges();
+            }
+        }
+        #endregion
+
+        #region Temperatures
+        public async Task<List<Temperature>> GetTemperatures()
+        {
+            return await _context.Temperatures.OrderBy(h => h.Name).ToListAsync();
+        }
+
+        public async Task<Temperature> GetTemperatureById(Guid id)
+        {
+            return await _context.Temperatures.FindAsync(id);
+        }
+
+        public void AddTemperature(MonthTypeViewModel viewModel)
+        {
+            Temperature temperature = new Temperature()
+            {
+                End = viewModel.End,
+                Id = CodeGenerators.GetId(),
+                Name = viewModel.Name,
+                Precent = viewModel.Percent,
+                Start = viewModel.Start
+            };
+
+            _context.Temperatures.Add(temperature);
+            _context.SaveChanges();
+        }
+
+        public bool UpdateTemperature(MonthTypeViewModel viewModel, Guid id)
+        {
+            Temperature temperature = _context.Temperatures.Find(id);
+
+            if (temperature != null)
+            {
+                temperature.End = viewModel.End;
+                temperature.Name = viewModel.Name;
+                temperature.Precent = viewModel.Percent;
+                temperature.Start = viewModel.Start;
+
+                _context.SaveChanges();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public void DeleteTemperature(Guid id)
+        {
+            Temperature temperature = _context.Temperatures.Find(id);
+
+            if (temperature != null)
+            {
+                _context.Temperatures.Remove(temperature);
+                _context.SaveChanges();
+            }
+        }
+
+
+        #endregion
 
 
 

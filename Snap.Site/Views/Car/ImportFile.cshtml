@@ -1,0 +1,37 @@
+﻿@model Snap.Core.ViewModels.Admin.CarViewModel
+@{
+    ViewData["Title"] = "ثبت اکسلی";
+    Layout = "~/Views/Shared/_dashboardLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right">ثبت اکسلی خودرو ها</h4>
+                <h4 class="title pull-left">
+                    <a href="~/file/Car.xlsx" target="_blank" class="btn btn-info">
+                        فایل نمونه
+                    </a>
+                    <a href="/Car/Index" class="btn btn-danger">
+                        بازگشت
+                    </a>
+                </h4>
+            </div>
+            <div class="clearfix"></div>
+            <div class="content">
+                <form asp-action="ImportFile" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="">انتخاب فایل</label>
+                        <input class="form-control" type="file" name="file" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="ثبت و بازگشت" class="btn btn-info btn-fill" />
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
