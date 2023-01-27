@@ -97,6 +97,20 @@ namespace Snap.Core.Interface
 
         #endregion
 
+
+        #region Role
+
+        Task<List<Role>> GetRoles();
+
+        Task<Role> GetRoleById(Guid id);
+
+        void AddRole(RoleViewModel viewModel);
+
+        bool UpdateRole(RoleViewModel viewModel, Guid id);
+
+        void DeleteRole(Guid id);
+
+        #endregion
     }
 
 }

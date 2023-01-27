@@ -1,0 +1,43 @@
+﻿@model Snap.Core.ViewModels.Admin.RoleViewModel
+@{
+    ViewData["Title"] = "ویرایش نقش";
+    Layout = "~/Views/Shared/_dashboardLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right">ویرایش نقش</h4>
+                <h4 class="title pull-left">
+                    <a href="/Role/Index" class="btn btn-danger">
+                        بازگشت
+                    </a>
+                </h4>
+            </div>
+            <div class="clearfix"></div>
+            <div class="content">
+                <form asp-action="Edit">
+                    <input type="hidden" asp-for="Id"/>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class=""></label>
+                        <input asp-for="Name" class="form-control" placeholder="نام نقش"/>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Title" class=""></label>
+                        <input asp-for="Title" class="form-control" placeholder="عنوان نقش"/>
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="ذخیره و بازگشت" class="btn btn-info btn-fill"/>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+

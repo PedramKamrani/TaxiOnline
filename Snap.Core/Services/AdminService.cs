@@ -479,7 +479,54 @@ namespace Snap.Core.Services
                 _context.SaveChanges();
             }
         }
+        #endregion
 
+        #region Role
+
+        public async Task<List<Role>> GetRoles()
+        {
+            return await _context.Roles.ToListAsync();
+        }
+
+        public async Task<Role> GetRoleById(Guid id)
+        {
+            return await _context.Roles.FindAsync(id);
+        }
+
+        public void AddRole(RoleViewModel viewModel)
+        {
+            var model = new Role
+            {
+                Id = CodeGenerators.GetId(),
+                Name = viewModel.Name,
+                Title = viewModel.Title
+            };
+            _context.Add(model);
+            SaveAsync();
+        }
+
+        public bool UpdateRole(RoleViewModel viewModel, Guid id)
+        {
+            var entity=_context.Roles.Find(id);
+            if (entity != null)
+            {
+                entity.Title=viewModel.Title;
+                entity.Name=viewModel.Name;
+                SaveAsync();
+            }
+
+            return false;
+        }
+
+        public void DeleteRole(Guid id)
+        {
+            var entity = _context.Roles.Find(id);
+            if (entity != null)
+            {
+                _context.Remove(entity);
+                SaveAsync();
+            }
+        }
 
         #endregion
 
