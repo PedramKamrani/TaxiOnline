@@ -13,7 +13,7 @@ namespace Snap.Data.Layer.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid UserId { get; set; }
-        [ForeignKey("Car")]
+       
         public Guid? CarId { get; set; }
      
         public Guid? ColorId { get; set; }
@@ -35,8 +35,8 @@ namespace Snap.Data.Layer.Entities
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
         [ForeignKey("ColorId")]
-        public  virtual Color Color { get; set; }
-       
-        public virtual Car Car { get; set; }
+        public  virtual Color? Color { get; set; }
+        [ForeignKey("CarId")]
+        public virtual Car? Car { get; set; }
     }
 }

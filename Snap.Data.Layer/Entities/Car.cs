@@ -10,6 +10,6 @@ namespace Snap.Data.Layer.Entities
         public Guid Id { get; set; }
         [Display(Name = "نام خودرو")]
         public string Name { get; set; }
-        public virtual ICollection<Driver> Drivers { get; set; }
+        public virtual ICollection<Driver>? Drivers { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Snap.Data.Layer.Context;
 
@@ -11,9 +12,11 @@ using Snap.Data.Layer.Context;
 namespace Snap.Data.Layer.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230128064113_ed")]
+    partial class ed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,6 +71,7 @@ namespace Snap.Data.Layer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("CarId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
@@ -75,6 +79,7 @@ namespace Snap.Data.Layer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ColorId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Image")
@@ -342,11 +347,15 @@ namespace Snap.Data.Layer.Migrations
                 {
                     b.HasOne("Snap.Data.Layer.Entities.Car", "Car")
                         .WithMany("Drivers")
-                        .HasForeignKey("CarId");
+                        .HasForeignKey("CarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Snap.Data.Layer.Entities.Color", "Color")
                         .WithMany("Drivers")
-                        .HasForeignKey("ColorId");
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Snap.Data.Layer.Entities.User", "User")
                         .WithOne("Driver")

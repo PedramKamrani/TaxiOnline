@@ -111,6 +111,24 @@ namespace Snap.Core.Interface
         void DeleteRole(Guid id);
 
         #endregion
+
+        #region User
+
+        bool CheckUserName(string userName);
+        void AddUser(UserViewModel viewModel);
+        string GetRoleName(Guid roleId);
+
+        Task<List<User>> GetUsers();
+        void DeleteUser(Guid id);
+        Task<UserEditViewModel> GetUserForUpdateById(string userName);
+        Task<bool> EditUser(UserEditViewModel viewModel, Guid id);
+       Task<Guid> GetRoleIdByRoleName(string roleName);
+       Task<Guid> GetUserIdByUserName(string userName);
+       Task<Driver> GetDriverById(Guid userid);
+
+       #endregion
+
+
     }
 
 }

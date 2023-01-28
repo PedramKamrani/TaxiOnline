@@ -527,10 +527,137 @@ namespace Snap.Core.Services
                 SaveAsync();
             }
         }
-
         #endregion
 
+        #region User
+        public bool CheckUserName(string userName)
+        {
+            return _context.Users.Any(x=>x.UserName==userName);
+        }
 
+        public void AddUser(UserViewModel viewModel)
+        {
+            if (!CheckUserName(viewModel.Username))
+            {
+                var User = new User()
+                {
+                    Id = CodeGenerators.GetId(),
+                    UserName = viewModel.Username,
+                    IsActive = viewModel.IsActive,
+                    RoleId = viewModel.RoleId,
+                    Wallet = 0,
+                    Password = CodeGenerators.GetActiveCode(),
+                    Token = "",
+                    
+                };
+                _context.Users.Add(User);
+                var userDetail = new UserDetail
+                {
+                    BirthDate = "",
+                    Date = DateTimeGenerators.ShamsiDate(),
+                    Time = DateTimeGenerators.ShamsiTime(),
+                    Fullname = "",
+                    UserId = User.Id,
+                };
+                _context.UserDetails.Add(userDetail);
+                if(GetRoleName(viewModel.RoleId) == "driver")
+                {
+                    Driver driver = new Driver
+                    {
+                        UserId = User.Id,
+                        Address = "",
+                        Avatar = "",
+                        Image = "",
+                        Telephone = "",
+                        IsConfirm = false,
+                        NationalCode = "",
+                        Code = CodeGenerators.GetActiveCode()
+                    };
+                    _context.Drivers.Add(driver);
+                }
+                SaveAsync();
+            }
+            
+        }
+
+        public  string GetRoleName(Guid roleId)
+        {
+            return _context.Roles.Find(roleId)?.Name??"";
+        }
+
+        public async Task<List<User>> GetUsers()
+        {
+            return await _context.Users.Include(x=>x.Role).OrderBy(x=>x.Id).ToListAsync();
+        }
+
+        public void DeleteUser(Guid id)
+        {
+            var entity = _context.Users.Find(id);
+            if (entity != null)
+            {
+                _context.Remove(entity);
+                SaveAsync();
+            }
+        }
+
+        public async Task<UserEditViewModel> GetUserForUpdateById(string userName)
+        {
+            var res=await _context.UserDetails.Include(x=>x.User).ThenInclude(x=>x.Driver)
+                .Select(x=>new UserEditViewModel
+                {
+                    BirthDate = x.BirthDate,
+                    IsActive = x.User.IsActive,
+                     Username = x.User.UserName,
+                     FullName = x.Fullname,
+                     RoleId = x.User.RoleId,
+                })
+                .FirstOrDefaultAsync(x=>x.Username== userName);
+             return res;
+        }
+
+        public async Task<bool> EditUser(UserEditViewModel viewModel,Guid id)
+        {
+            var user =GetUserForUpdateById(viewModel.Username).Result;
+            var roleid =await GetRoleIdByRoleName("driver");
+            Driver? driver;
+            if (user.RoleId==roleid)
+            {
+                driver = new Driver
+                {
+                    IsConfirm = false,
+                    Address = "",
+                    Avatar = "",
+                    UserId = id,
+                    Image = "",
+                    NationalCode = "",
+                    Telephone = "",
+                    Code = CodeGenerators.GetActiveCode()
+                    
+                };
+                _context.Drivers.Add(driver);
+            }
+            driver = await GetDriverById(id);
+            _context.Drivers.Remove(driver);
+            SaveAsync();
+            return true;
+        }
+
+        public async Task<Guid> GetRoleIdByRoleName(string roleName)
+        {
+            return await _context.Roles.Where(x=>x.Title==roleName).Select(x=>x.Id).FirstOrDefaultAsync();
+        }
+
+        public async Task<Guid> GetUserIdByUserName(string userName)
+        {
+            return await _context.Users.Where(x => x.UserName == userName).Select(x=>x.Id).FirstOrDefaultAsync();
+        }
+
+        public async Task<Driver> GetDriverById(Guid userid)
+        {
+            return await _context.Drivers.Where(x => x.UserId == userid).FirstOrDefaultAsync();
+        }
+
+        #endregion
 
         #region Dispose
         public void Dispose()

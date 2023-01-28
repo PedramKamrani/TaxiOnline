@@ -1,0 +1,120 @@
+﻿@model IEnumerable<Snap.Data.Layer.Entities.User>
+@{
+    ViewData["Title"] = "نمایش کاربران";
+    Layout = "~/Views/Shared/_dashboardLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right">کاربران</h4>
+                <h4 class="title pull-left">
+                    <a href="/User/Create" class="btn btn-success">جدید</a>
+                </h4>
+                <div class="clearfix"></div>
+                <br />
+                <input type="text" class="form-control" placeholder="جستجو نام کاربری ..." id="mySearch" />
+            </div>
+            <div class="content table-responsive table-full-width">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UserName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Role.Title)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.IsActive)
+                            </th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(model => item.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => item.Role.Title)
+                                </td>
+                                <td>
+                                    @if (item.IsActive)
+                                    {
+                                        <span class="label label-success">فعال</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="label label-danger">غیرفعال</span>
+                                    }
+                                </td>
+                                <td>
+
+                                    @if (item.Role.Name == "driver")
+                                    {
+                                        <a href="/User/DriverProp/@item.Id" class="btn btn-xs btn-info">
+                                            <i class="fa fa-user-circle"></i>
+                                        </a>
+                                        <a href="/User/DriverCertificate/@item.Id" class="btn btn-xs btn-primary">
+                                            <i class="fa fa-image"></i>
+                                        </a>
+                                        <a href="/User/DriverCar/@item.Id" class="btn btn-xs btn-default">
+                                            <i class="fa fa-car"></i>
+                                        </a>
+                                    }
+
+                                    <a asp-controller="User" asp-action="Edit" asp-route-UserName="@item.UserName" class="btn btn-xs btn-warning">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="#" onclick="myDelete('@item.Id')" class="btn btn-xs btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section mySection
+    {
+    <script src="~/js/sweet.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#mySearch").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
+    <script>
+        function myDelete(id) {
+            swal({
+                title: "تأیید حذف",
+                text: "آیا از حذف این مقدار اطمینان دارید؟",
+                icon: "warning",
+                buttons: ['لغو', 'بلی'],
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.open('/User/Delete/' + id, '_parent');
+                    }
+                });
+        }
+    </script>
+}
+
+
