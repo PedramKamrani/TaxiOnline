@@ -4,7 +4,6 @@ using Snap.Core.Interface;
 using Snap.Core.ViewModels.Admin;
 using Snap.Data.Layer.Context;
 using Snap.Data.Layer.Entities;
-using System.Linq;
 using RateType = Snap.Data.Layer.Entities.RateType;
 
 namespace Snap.Core.Services
@@ -20,6 +19,7 @@ namespace Snap.Core.Services
         }
 
         #region Car
+
         public async Task<List<CarViewModel>> GetCars()
         {
             var res = await _context.Car.Select(c => new CarViewModel
@@ -71,7 +71,8 @@ namespace Snap.Core.Services
         }
 
         public void SaveAsync()
-        { _context.SaveChanges();
+        {
+            _context.SaveChanges();
         }
 
         #endregion
@@ -125,12 +126,15 @@ namespace Snap.Core.Services
                 SaveAsync();
                 return true;
             }
+
             return false;
 
         }
+
         #endregion
 
         #region Rate
+
         public async Task<List<RateType>> GetRateTypes()
         {
             return await _context.RateTypes.ToListAsync();
@@ -174,10 +178,6 @@ namespace Snap.Core.Services
 
         #endregion
 
-
-
-
-
         #region Settings
 
         public async Task<Settings> GetSiteSetting()
@@ -190,10 +190,10 @@ namespace Snap.Core.Services
             var entity = _context.Settings.FirstOrDefault();
             if (entity != null)
             {
-                entity.Name=settings.Name;
+                entity.Name = settings.Name;
                 entity.Description = settings.Desc;
                 entity.Tel = settings.Tel;
-                entity.Fax=settings.Fax;
+                entity.Fax = settings.Fax;
                 _context.Update(entity);
                 SaveAsync();
                 return true;
@@ -201,6 +201,7 @@ namespace Snap.Core.Services
 
             return false;
         }
+
         public bool UpdatePriceSetting(PriceSettingViewModel viewModel)
         {
             Settings setting = _context.Settings.FirstOrDefault();
@@ -291,17 +292,17 @@ namespace Snap.Core.Services
                 Start = priceTypeViewModel.Start,
                 Name = priceTypeViewModel.Name,
                 Id = id
-                
+
             };
             _context.PriceTypes.Update(model);
             SaveAsync();
             return true;
         }
 
-        public async Task<bool>  DeletePriceType(Guid id)
+        public async Task<bool> DeletePriceType(Guid id)
         {
-            var entity =(PriceType)await _context.PriceTypes.FindAsync(id);
-             _context.Remove(entity);
+            var entity = (PriceType)await _context.PriceTypes.FindAsync(id);
+            _context.Remove(entity);
             SaveAsync();
             return true;
         }
@@ -325,7 +326,7 @@ namespace Snap.Core.Services
             var model = new MonthType
             {
                 Name = colorAdminViewModel.Name,
-                End =colorAdminViewModel.End,
+                End = colorAdminViewModel.End,
                 Start = colorAdminViewModel.Start,
                 Id = CodeGenerators.GetId(),
                 Precent = colorAdminViewModel.Percent
@@ -336,14 +337,14 @@ namespace Snap.Core.Services
 
         public bool UpdateMonthType(MonthTypeViewModel viewModel, Guid id)
         {
-            var entity= _context.MonthTypes.AsNoTracking().FirstOrDefault(x=>x.Id==id);
+            var entity = _context.MonthTypes.AsNoTracking().FirstOrDefault(x => x.Id == id);
             var model = new MonthType
             {
-               End = viewModel.End,
-               Start = viewModel.Start,
-               Name = viewModel.Name,
-               Precent = viewModel.Percent,
-               Id =id
+                End = viewModel.End,
+                Start = viewModel.Start,
+                Name = viewModel.Name,
+                Precent = viewModel.Percent,
+                Id = id
             };
             _context.Update(model);
             SaveAsync();
@@ -422,9 +423,11 @@ namespace Snap.Core.Services
                 _context.SaveChanges();
             }
         }
+
         #endregion
 
         #region Temperatures
+
         public async Task<List<Temperature>> GetTemperatures()
         {
             return await _context.Temperatures.OrderBy(h => h.Name).ToListAsync();
@@ -479,6 +482,7 @@ namespace Snap.Core.Services
                 _context.SaveChanges();
             }
         }
+
         #endregion
 
         #region Role
@@ -507,11 +511,11 @@ namespace Snap.Core.Services
 
         public bool UpdateRole(RoleViewModel viewModel, Guid id)
         {
-            var entity=_context.Roles.Find(id);
+            var entity = _context.Roles.Find(id);
             if (entity != null)
             {
-                entity.Title=viewModel.Title;
-                entity.Name=viewModel.Name;
+                entity.Title = viewModel.Title;
+                entity.Name = viewModel.Name;
                 SaveAsync();
             }
 
@@ -527,12 +531,14 @@ namespace Snap.Core.Services
                 SaveAsync();
             }
         }
+
         #endregion
 
         #region User
+
         public bool CheckUserName(string userName)
         {
-            return _context.Users.Any(x=>x.UserName==userName);
+            return _context.Users.Any(x => x.UserName == userName);
         }
 
         public void AddUser(UserViewModel viewModel)
@@ -548,7 +554,7 @@ namespace Snap.Core.Services
                     Wallet = 0,
                     Password = CodeGenerators.GetActiveCode(),
                     Token = "",
-                    
+
                 };
                 _context.Users.Add(User);
                 var userDetail = new UserDetail
@@ -560,7 +566,7 @@ namespace Snap.Core.Services
                     UserId = User.Id,
                 };
                 _context.UserDetails.Add(userDetail);
-                if(GetRoleName(viewModel.RoleId) == "driver")
+                if (GetRoleName(viewModel.RoleId) == "driver")
                 {
                     Driver driver = new Driver
                     {
@@ -575,19 +581,20 @@ namespace Snap.Core.Services
                     };
                     _context.Drivers.Add(driver);
                 }
+
                 SaveAsync();
             }
-            
+
         }
 
-        public  string GetRoleName(Guid roleId)
+        public string GetRoleName(Guid roleId)
         {
-            return _context.Roles.Find(roleId)?.Name??"";
+            return _context.Roles.Find(roleId)?.Name ?? "";
         }
 
         public async Task<List<User>> GetUsers()
         {
-            return await _context.Users.Include(x=>x.Role).OrderBy(x=>x.Id).ToListAsync();
+            return await _context.Users.Include(x => x.Role).OrderBy(x => x.Id).ToListAsync();
         }
 
         public void DeleteUser(Guid id)
@@ -602,25 +609,25 @@ namespace Snap.Core.Services
 
         public async Task<UserEditViewModel> GetUserForUpdateById(string userName)
         {
-            var res=await _context.UserDetails.Include(x=>x.User).ThenInclude(x=>x.Driver)
-                .Select(x=>new UserEditViewModel
+            var res = await _context.UserDetails.Include(x => x.User).ThenInclude(x => x.Driver)
+                .Select(x => new UserEditViewModel
                 {
                     BirthDate = x.BirthDate,
                     IsActive = x.User.IsActive,
-                     Username = x.User.UserName,
-                     FullName = x.Fullname,
-                     RoleId = x.User.RoleId,
+                    Username = x.User.UserName,
+                    FullName = x.Fullname,
+                    RoleId = x.User.RoleId,
                 })
-                .FirstOrDefaultAsync(x=>x.Username== userName);
-             return res;
+                .FirstOrDefaultAsync(x => x.Username == userName);
+            return res;
         }
 
-        public async Task<bool> EditUser(UserEditViewModel viewModel,Guid id)
+        public async Task<bool> EditUser(UserEditViewModel viewModel, Guid id)
         {
-            var user =GetUserForUpdateById(viewModel.Username).Result;
-            var roleid =await GetRoleIdByRoleName("driver");
+            var user = GetUserForUpdateById(viewModel.Username).Result;
+            var roleid = await GetRoleIdByRoleName("driver");
             Driver? driver;
-            if (user.RoleId==roleid)
+            if (user.RoleId == roleid)
             {
                 driver = new Driver
                 {
@@ -632,10 +639,11 @@ namespace Snap.Core.Services
                     NationalCode = "",
                     Telephone = "",
                     Code = CodeGenerators.GetActiveCode()
-                    
+
                 };
                 _context.Drivers.Add(driver);
             }
+
             driver = await GetDriverById(id);
             _context.Drivers.Remove(driver);
             SaveAsync();
@@ -644,12 +652,12 @@ namespace Snap.Core.Services
 
         public async Task<Guid> GetRoleIdByRoleName(string roleName)
         {
-            return await _context.Roles.Where(x=>x.Title==roleName).Select(x=>x.Id).FirstOrDefaultAsync();
+            return await _context.Roles.Where(x => x.Title == roleName).Select(x => x.Id).FirstOrDefaultAsync();
         }
 
         public async Task<Guid> GetUserIdByUserName(string userName)
         {
-            return await _context.Users.Where(x => x.UserName == userName).Select(x=>x.Id).FirstOrDefaultAsync();
+            return await _context.Users.Where(x => x.UserName == userName).Select(x => x.Id).FirstOrDefaultAsync();
         }
 
         public async Task<Driver> GetDriverById(Guid userid)
@@ -657,16 +665,101 @@ namespace Snap.Core.Services
             return await _context.Drivers.Where(x => x.UserId == userid).FirstOrDefaultAsync();
         }
 
+        public async Task<bool> UserDriverProp(Guid id, DriverPropViewModel viewModel)
+        {
+            if (viewModel.Avatar.FileName != null)
+            {
+                var strEx = Path.GetExtension(viewModel.Avatar.FileName);
+                if (strEx != ".jpg")
+                {
+                    return false;
+                }
+
+                string filePath = "";
+                viewModel.AvatarName = CodeGenerators.GetFileName() + strEx;
+                filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/driver/", viewModel.AvatarName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    viewModel.Avatar.CopyTo(stream);
+                }
+
+                Driver driver = _context.Drivers.Find(id);
+                if (driver != null)
+                {
+                    driver.Avatar = viewModel.AvatarName;
+                    driver.Address = viewModel.Address;
+                    driver.NationalCode = viewModel.NationalCode;
+                    driver.Telephone = viewModel.Tel;
+                }
+
+                SaveAsync();
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<Driver> GetDriver(Guid id)
+        {
+            return await _context.Drivers.FindAsync(id);
+        }
+
+        public bool UpdateDriverCertificate(Guid id, DriverImgViewModel viewModel)
+        {
+            Driver driver = _context.Drivers.Find(id);
+
+            if (viewModel.Img != null)
+            {
+                string strExt = Path.GetExtension(viewModel.Img.FileName);
+
+                if (strExt != ".jpg")
+                {
+                    return false;
+                }
+
+                string filePath = "";
+
+                viewModel.ImgName = CodeGenerators.GetFileName() + strExt;
+                filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/driver/", viewModel.ImgName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    viewModel.Img.CopyTo(stream);
+                }
+
+                driver.Image = viewModel.ImgName;
+                driver.IsConfirm = viewModel.IsConfirm;
+
+                _context.SaveChanges();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool UpdateDriverCar(Guid id, DriverCarViewModel viewModel)
+        {
+            Driver driver = _context.Drivers.Find(id);
+
+            driver.Code = viewModel.CarCode;
+            driver.CarId = viewModel.CarId;
+            driver.ColorId = viewModel.ColorId;
+
+            _context.SaveChanges();
+
+            return true;
+        }
+
         #endregion
 
         #region Dispose
+
         public void Dispose()
         {
             _context.Dispose();
         }
+
         #endregion
-
-
-
     }
 }

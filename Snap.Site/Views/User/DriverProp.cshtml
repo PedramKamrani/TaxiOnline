@@ -1,0 +1,79 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Snap.Core.ViewModels.Admin.DriverPropViewModel
+
+@{
+    ViewData["Title"] = "مشخصات راننده";
+    Layout = "~/Views/Shared/_dashboardLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right">مشخصات راننده</h4>
+                <h4 class="title pull-left">
+                    <a href="/user/Index" class="btn btn-danger">
+                        بازگشت
+                    </a>
+                </h4>
+            </div>
+            <div class="clearfix"></div>
+            <div class="content">
+                <form asp-action="DriverProp" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="NationalCode" class=""></label>
+                        <input asp-for="NationalCode" class="form-control" />
+                        <span asp-validation-for="NationalCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Tel" class=""></label>
+                        <input asp-for="Tel" class="form-control" />
+                        <span asp-validation-for="Tel" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address" class=""></label>
+                        <textarea asp-for="Address" class="form-control"></textarea>
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Avatar" class="control-label"></label>
+                        <input asp-for="Avatar" class="form-control" type="file" />
+                        <span asp-validation-for="Avatar" class="text-danger"></span>
+                        <br />
+                        <img src="~/img/driver/@Model.AvatarName" alt="تصویری پیدا نشد" width="100" height="100" class="img-responsive" style="margin: auto" />
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="ذخیره و بازگشت" class="btn btn-info btn-fill" />
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/sweet.js"></script>
+
+@if (ViewBag.IsSuccess)
+{
+    <script>
+        swal("انجام شد", "تغییرات با موفقیت انجام شد", "success", {
+            button: "متوجه شدم",
+        });
+    </script>
+}
+
+@if (ViewBag.IsError)
+{
+    <script>
+        swal("اخطار", "لطفا یک تصویر با پسوند jpg انتخاب نمایید", "warning", {
+            button: "متوجه شدم",
+        });
+    </script>
+}
+
+
+

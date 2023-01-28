@@ -125,8 +125,11 @@ namespace Snap.Core.Interface
        Task<Guid> GetRoleIdByRoleName(string roleName);
        Task<Guid> GetUserIdByUserName(string userName);
        Task<Driver> GetDriverById(Guid userid);
-
-       #endregion
+      Task<bool> UserDriverProp(Guid id, DriverPropViewModel viewModel);
+      Task<Driver> GetDriver(Guid id);
+      bool UpdateDriverCertificate(Guid id, DriverImgViewModel viewModel);
+      bool UpdateDriverCar(Guid id, DriverCarViewModel viewModel);
+        #endregion
 
 
     }
