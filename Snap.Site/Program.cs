@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Snap.Core.Interface;
+using Snap.Core.Scope;
 using Snap.Core.Services;
 using Snap.Data.Layer.Context;
 
@@ -17,6 +18,8 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 #region IOC
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IPanelService, PanelService>();
+builder.Services.AddScoped<SiteScopeLayout>();
 #endregion
 
 #region Authentication

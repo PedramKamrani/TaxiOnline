@@ -87,7 +87,7 @@ namespace Snap.Site.Controllers
                     
                 };
                 await HttpContext.SignInAsync(principal, properties);
-                return View();
+                return RedirectToAction("Dashboard","Panel");
             }
             ViewBag.IsError = true;
             return View();

@@ -1,0 +1,163 @@
+﻿html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+    direction: rtl;
+    text-align: right;
+    background-color: whitesmoke;
+    overflow: hidden;
+    font-family: 'B Yekan', Tahoma;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+.main-row {
+    margin: 0;
+    height: 100%;
+}
+
+.main-col {
+    height: 100%;
+    background-color: white;
+    padding: 5px;
+}
+
+.header-area {
+    border-bottom: 1px solid #CECECE;
+    padding: 15px;
+    height: 90px;
+}
+
+.logo-area {
+    float: left;
+}
+
+    .logo-area img {
+        width: 170px;
+    }
+
+.menu-links img {
+    width: 30px;
+}
+
+.menu-links {
+    margin: 0px 10px;
+}
+
+.menu-area {
+    padding-top: 10px;
+}
+
+.footer-section {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 99;
+    background-color: #f9f9f9;
+    border-top: 1px solid #CECECE;
+    padding: 15px;
+    text-align: center;
+    right: 0;
+}
+
+.footer-links img {
+    width: 25px;
+}
+
+.footer-links {
+    padding: 15px;
+    text-decoration: none !important;
+    position: relative;
+    text-align: center;
+    color: #06df6f;
+}
+
+.profile-link {
+    color: #fff;
+    background-color: #FB1D4A;
+    padding: 4px 4px;
+    border-radius: 50%;
+    font-size: 12px;
+    display: inline-block;
+}
+
+.links-ab {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -45px;
+    background-color: #353536;
+    color: #fff;
+    font-size: 12px;
+    width: 100px;
+    border-radius: 5px;
+    padding: 5px;
+    z-index: 99;
+}
+
+.footer-links.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: orange;
+    transform: translateX(300%);
+    z-index: 99;
+}
+
+.footer-links.active .links-ab::before {
+    content: '';
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid #353536;
+    position: absolute;
+    bottom: -5px;
+    left: 15px;
+    z-index: 99;
+}
+
+.main-section {
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    scrollbar-color: transparent transparent;
+    scrollbar-width: thin;
+    scrollbar-opacity: 0;
+    -webkit-scrollbar-color: transparent transparent;
+    -webkit-scrollbar-width: thin;
+    -webkit-scrollbar-opacity: 0;
+    transition: .3s;
+    overflow-x: hidden;
+    height: 85vh;
+}
+
+    .main-section:hover {
+        scrollbar-color: gray transparent;
+        scrollbar-width: thin;
+    }
+
+
+    .main-section::-webkit-scrollbar {
+        transition: .3s;
+        width: 6px;
+        background-color: #f9f9f9;
+    }
+
+    .main-section::-webkit-scrollbar-thumb {
+        transition: .3s;
+        background-color: transparent;
+    }
+
+    .main-section:hover.main-section::-webkit-scrollbar-thumb {
+        background-color: gray;
+    }
