@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Snap.Core.Interface;
 using Snap.Core.Services;
@@ -18,9 +19,27 @@ builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 #endregion
 
+#region Authentication
+
+builder.Services.AddAuthentication(op =>
+{
+    op.DefaultAuthenticateScheme=CookieAuthenticationDefaults.AuthenticationScheme;
+    op.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    op.DefaultSignInScheme=CookieAuthenticationDefaults.AuthenticationScheme;
+
+}).AddCookie(option =>
+{
+    option.LoginPath = "/Account/Register";
+    option.LogoutPath = "/Account/SinOut";
+    option.ExpireTimeSpan=TimeSpan.FromDays(30);
+});
+
+#endregion
 var app = builder.Build();
 app.UseStaticFiles();
 app.MapGet("/", () => "Hello World!");
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseMvcWithDefaultRoute();
 app.UseRouting();
 app.Run();

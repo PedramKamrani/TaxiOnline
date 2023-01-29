@@ -130,6 +130,12 @@ namespace Snap.Core.Services
             return new User();
         }
 
+        public async Task<bool> CheckUserRole(string roleName, string userName)
+        {
+            var role = await _context.Roles.SingleOrDefaultAsync(z=>z.Name==roleName);
+            return await _context.Users.AnyAsync(x => x.UserName == userName && x.RoleId == role.Id);
+        }
+
         private void Sms(string username,string code)
         {
             try

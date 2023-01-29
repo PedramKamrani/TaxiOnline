@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Snap.Core.Interface;
+using Snap.Core.Securities;
 using Snap.Core.ViewModels.Admin;
 using Snap.Data.Layer.Entities;
 
@@ -13,12 +15,11 @@ namespace Snap.Site.Controllers
         {
             _service = service;
         }
-
         public IActionResult Index()
         {
             return View();
         }
-
+        
         #region Setting
 
 

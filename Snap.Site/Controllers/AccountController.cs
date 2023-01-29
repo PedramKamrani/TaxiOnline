@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using Snap.Core.Interface;
 using Snap.Core.ViewModels;
 using Snap.Data.Layer.Entities;
@@ -64,11 +67,26 @@ namespace Snap.Site.Controllers
         }
 
         [HttpPost]
-        public IActionResult Active(ActiveCodeViewModel codeViewModel)
+        public async Task<IActionResult> Active(ActiveCodeViewModel codeViewModel)
         {
-            var user = _service.ActiveUser(codeViewModel);
+            var user =await _service.ActiveUser(codeViewModel);
             if (user != null)
             {
+                ViewBag.IsError = false;
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
+                    new Claim(ClaimTypes.Name,user.UserName)
+                };
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
+                var properties = new AuthenticationProperties()
+                {
+                    IsPersistent = true,
+                    
+                };
+                await HttpContext.SignInAsync(principal, properties);
                 return View();
             }
             ViewBag.IsError = true;

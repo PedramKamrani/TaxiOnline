@@ -7,7 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+	  <PackageReference Include="AspNetCore.Mvc.Extensions.RedirectAndPost" Version="1.0.2" />
 	  <PackageReference Include="KavenegarDotNetCore" Version="1.0.5" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.2" />
 	  <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.2" />
@@ -15,6 +17,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Snap.Data.Layer\Snap.Data.Layer.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Mvc.Abstractions">
+      <HintPath>..\..\..\..\..\..\Program Files\dotnet\shared\Microsoft.AspNetCore.App\7.0.2\Microsoft.AspNetCore.Mvc.Abstractions.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

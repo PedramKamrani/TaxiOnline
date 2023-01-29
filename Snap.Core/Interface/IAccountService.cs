@@ -10,5 +10,6 @@ namespace Snap.Core.Interface
         Task<Guid> GetRoleIdAsync(string roleName);
         Task<User?> ActiveUser(ActiveCodeViewModel activeCodeViewModel);
         Task<User?> RegisterDriverAsync(RegisterViewModel registerViewModel);
+        Task<bool> CheckUserRole(string roleName, string userName);
     }
 }
