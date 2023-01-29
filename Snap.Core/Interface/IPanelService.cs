@@ -1,4 +1,5 @@
-﻿using Snap.Data.Layer.Entities;
+﻿using Snap.Core.ViewModels;
+using Snap.Data.Layer.Entities;
 
 namespace Snap.Core.Interface
 {
@@ -6,5 +7,6 @@ namespace Snap.Core.Interface
     {
         Task<UserDetail> GetUserDetailsAsync(string userName);
         string GetRoleName(string userName);
+        bool UpdateUserDetailsProfile(Guid id, UserDetailProfileViewModel viewModel);
     }
 }
