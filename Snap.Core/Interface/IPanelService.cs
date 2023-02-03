@@ -8,5 +8,13 @@ namespace Snap.Core.Interface
         Task<UserDetail> GetUserDetailsAsync(string userName);
         string GetRoleName(string userName);
         bool UpdateUserDetailsProfile(Guid id, UserDetailProfileViewModel viewModel);
+
+        #region Payment
+        void AddFactor(Factor factor);
+        bool UpdateFactor(Guid userid, string orderNumber, long price);
+        Guid GetFactorById(string orderNumber);
+        void UpdatePayment(Guid id, string date, string time, string desc, string bank, string trace, string refId);
+        Task<Factor> GetFactor(Guid id);
+        #endregion
     }
 }
