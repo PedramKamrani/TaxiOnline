@@ -131,6 +131,22 @@ namespace Snap.Core.Interface
       bool UpdateDriverCar(Guid id, DriverCarViewModel viewModel);
         #endregion
 
+       
+
+        #region Discount
+
+        Task<List<Discount>> GetDiscounts();
+
+        Task<Discount> GetDiscountById(Guid id);
+
+        void AddDiscount(AdminDiscountViewModel viewModel);
+
+        bool UpdateDiscount(AdminDiscountViewModel viewModel, Guid id);
+
+        void DeleteDiscount(Guid id);
+
+        #endregion
+
 
     }
 

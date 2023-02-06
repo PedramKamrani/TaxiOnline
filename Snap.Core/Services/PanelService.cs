@@ -78,14 +78,14 @@ namespace Snap.Core.Services
         public void UpdatePayment(Guid id, string date, string time, string desc, string bank, string trace, string refId)
         {
             Factor factor = _context.Factors.Find(id);
-
+            User user = _context.Users.Find(factor.UserId);
             factor.Date = DateTimeGenerators.ShamsiDate();
             factor.Time = DateTimeGenerators.ShamsiTime();
             factor.Desc = desc;
             factor.TraceNumber = trace;
             factor.BankName = bank;
             factor.RefNumber = refId;
-
+            user.Wallet += factor.Price;
             _context.SaveChanges();
         }
 

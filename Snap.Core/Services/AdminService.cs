@@ -4,6 +4,7 @@ using Snap.Core.Interface;
 using Snap.Core.ViewModels.Admin;
 using Snap.Data.Layer.Context;
 using Snap.Data.Layer.Entities;
+using Snap.Data.Layer.Migrations;
 using RateType = Snap.Data.Layer.Entities.RateType;
 
 namespace Snap.Core.Services
@@ -750,6 +751,68 @@ namespace Snap.Core.Services
 
             return true;
         }
+
+        #endregion
+
+        #region  Discount
+
+        public async Task<List<Discount>> GetDiscounts()
+        {
+            return await _context.Discounts.ToListAsync();
+        }
+
+        public async Task<Discount> GetDiscountById(Guid id)
+        {
+            return await _context.Discounts.FindAsync(id);
+        }
+
+        public void AddDiscount(AdminDiscountViewModel viewModel)
+        {
+            var discount = new Discount
+            {
+                Price = viewModel.Price,
+                Code = viewModel.Code,
+                Desc = viewModel.Desc,
+                Expire =   viewModel.Expire,
+                Name = viewModel.Name,
+                Start = viewModel.Start,
+                Percent = viewModel.Percent,
+                Id = CodeGenerators.GetId()
+            };
+            _context.Add(discount);
+            _context.SaveChanges();
+        }
+
+        public bool UpdateDiscount(AdminDiscountViewModel viewModel, Guid id)
+        {
+            var discount = _context.Discounts.Find(id);
+
+            if (discount == null) return false;
+            
+                discount.Code = viewModel.Code;
+                discount.Start = viewModel.Start;
+                discount.Expire = viewModel.Expire;
+                discount.Desc = viewModel.Desc;
+                discount.Name = viewModel.Name;
+                discount.Percent = viewModel.Percent;
+                discount.Price = viewModel.Price;
+        
+            _context.Discounts.Update(discount);
+            _context.SaveChanges();
+            return true;
+        }
+
+        public void DeleteDiscount(Guid id)
+        {
+            var entity=_context.Discounts.Find(id);
+
+            if (entity == null)return;
+            _context.Discounts.Remove(entity);
+            _context.SaveChanges();
+
+            
+        }
+
 
         #endregion
 

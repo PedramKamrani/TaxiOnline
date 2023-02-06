@@ -1,0 +1,74 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Snap.Core.ViewModels.Admin.AdminDiscountViewModel
+
+@{
+    ViewData["Title"] = "ثبت کوپن تخفیف";
+    Layout = "~/Views/Shared/_dashboardLayout.cshtml";
+}
+
+
+<link href="~/picker/PersianDatePicker.min.css" rel="stylesheet" />
+<script src="~/picker/PersianDatePicker.min.js"></script>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right">ثبت کوپن تخفیف</h4>
+                <h4 class="title pull-left">
+                    <a href="/Discount/Index" class="btn btn-danger">
+                        بازگشت
+                    </a>
+                </h4>
+            </div>
+            <div class="clearfix"></div>
+            <div class="content">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class=""></label>
+                        <input asp-for="Name" class="form-control" placeholder="عنوان کوپن" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Code" class=""></label>
+                        <input asp-for="Code" class="form-control" placeholder="کد تخفیف" />
+                        <span asp-validation-for="Code" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Start" class=""></label>
+                        <input asp-for="Start" class="form-control" placeholder="تاریخ شروع" onclick="PersianDatePicker.Show(this, '@ViewBag.MyDate')" />
+                        <span asp-validation-for="Start" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Expire" class=""></label>
+                        <input asp-for="Expire" class="form-control" placeholder="تاریخ انقضاء" onclick="PersianDatePicker.Show(this, '@ViewBag.MyDate')" />
+                        <span asp-validation-for="Expire" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class=""></label>
+                        <input asp-for="Price" class="form-control" value="0" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Percent" class=""></label>
+                        <input asp-for="Percent" class="form-control" value="0" />
+                        <span asp-validation-for="Percent" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Desc" class=""></label>
+                        <textarea asp-for="Desc" class="form-control" placeholder="سایر توضیحات"></textarea>
+                        <span asp-validation-for="Desc" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="ثبت و بازگشت" class="btn btn-info btn-fill" />
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

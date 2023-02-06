@@ -67,15 +67,15 @@ namespace Snap.Site.Controllers
             {
                 Factor factor = new Factor()
                 {
-                    BankName = null,
-                    Date = null,
-                    Desc = null,
+                    BankName = "",
+                    Date = "",
+                    Desc = "",
                     Id = CodeGenerators.GetId(),
                     OrderNumber = orderNumber,
                     Price = Convert.ToInt32(viewModel.Wallet),
-                    RefNumber = null,
-                    Time = null,
-                    TraceNumber = null,
+                    RefNumber = "",
+                    Time = "",
+                    TraceNumber = "",
                     UserId = user.UserId
                 };
 
@@ -85,7 +85,7 @@ namespace Snap.Site.Controllers
             Guid factorID = _panel.GetFactorById(orderNumber);
 
             var payment = new ZarinpalSandbox.Payment(Convert.ToInt32(viewModel.Wallet));
-            var result = payment.PaymentRequest("تراکنش جدید", "https://localhost:44369/Panel/PaymentCallBack/" + factorID);
+            var result = payment.PaymentRequest("تراکنش جدید", "https://localhost:5000/Panel/PaymentCallBack/" + factorID);
 
             if (result.Result.Status == 100)
             {

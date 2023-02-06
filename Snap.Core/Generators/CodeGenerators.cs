@@ -21,7 +21,7 @@
         public static string GetOrderCode()
         {
             Random random = new Random();
-            return random.Next(1000000, 999999).ToString();
+            return random.Next(1000000, 9999999).ToString();
         }
     }
 }

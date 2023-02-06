@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Snap.Data.Layer.Entities.Discount>
+
+@{
+    ViewData["Title"] = "نمایش کوپن های تخفیف";
+    Layout = "~/Views/Shared/_dashboardLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="header">
+                <h4 class="title pull-right">خودرو ها</h4>
+                <h4 class="title pull-left">
+                    <a href="/Discount/Create" class="btn btn-success">جدید</a>
+                </h4>
+                <div class="clearfix"></div>
+            </div>
+            <div class="content table-responsive table-full-width">
+                <table class="table table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Name)</th>
+                            <th>@Html.DisplayNameFor(model => model.Start)</th>
+                            <th>@Html.DisplayNameFor(model => model.Expire)</th>
+                            <th>@Html.DisplayNameFor(model => model.Code)</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(model => item.Name)</td>
+                                <td>@Html.DisplayFor(model => item.Start)</td>
+                                <td>@Html.DisplayFor(model => item.Expire)</td>
+                                <td>@Html.DisplayFor(model => item.Code)</td>
+                                <td>
+                                    <a href="/Discount/Edit/@item.Id" class="btn btn-xs btn-warning">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a href="#" onclick="myDelete('@item.Id')" class="btn btn-xs btn-danger">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section mySection
+    {
+    <script src="~/js/sweet.js"></script>
+
+    <script>
+        function myDelete(id) {
+            swal({
+                title: "تأیید حذف",
+                text: "آیا از حذف این مقدار اطمینان دارید؟",
+                icon: "warning",
+                buttons: ['لغو', 'بلی'],
+                dangerMode: true,
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.open('/Discount/Delete/' + id, '_parent');
+                    }
+                });
+        }
+    </script>
+}
