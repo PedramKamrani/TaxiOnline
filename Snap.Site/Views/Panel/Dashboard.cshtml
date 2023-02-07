@@ -2,3 +2,46 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Site.cshtml";
 }
+
+
+<div id="map"></div>
+
+
+@section mySection
+{
+
+    <script>
+
+    var mapOptions = {
+        center: [20, 80],
+        zoom: 15
+    }
+
+        var map = new L.map('map', mapOptions);
+
+    var layer = new L.TileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png');
+
+    map.addLayer(layer);
+
+    var iconOptions = {
+        iconUrl: '/img/001.png',
+        iconSize: [50, 50]
+    }
+
+    var firstIcon = L.icon(iconOptions);
+
+    var markerOptions = {
+        title: "First",
+        clickable: true,
+        draggable: true,
+        icon: firstIcon
+    }
+
+    var marker = L.marker([20, 80], markerOptions);
+
+
+    marker.addTo(map);
+
+</script>
+
+}

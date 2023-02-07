@@ -161,3 +161,8 @@ a {
     .main-section:hover.main-section::-webkit-scrollbar-thumb {
         background-color: gray;
     }
+
+#map {
+    height: 400px;
+    width: 100%;
+}

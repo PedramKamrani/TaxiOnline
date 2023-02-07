@@ -16,6 +16,8 @@
     <link href="~/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/css/site.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 
 </head>
 <body>
@@ -36,16 +38,16 @@
                 </section>
                 <section class="footer-section">
                     <div class="footer-menu">
-                        <a href="#" class="footer-links">
+                        <a href="/Panel/Dashboard" class="footer-links">
                             <i class="fa fa-dashboard fa-2x"></i>
                         </a>
-                        <a href="#" class="footer-links">
+                        <a href="/panel/userProfile" class="footer-links">
                             <i class="fa fa-user fa-2x"></i>
                         </a>
 
                         @if (userRole == "driver")
                         {
-                            <a href="#" class="footer-links">
+                            <a href="/Panel/Payment" class="footer-links">
                                 <i class="fa fa-money fa-2x"></i>
                             </a>
                             <a href="#" class="footer-links">
