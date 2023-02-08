@@ -156,6 +156,8 @@ namespace Snap.Core.Interface
         #endregion
 
 
+        int WeeklyRegister(string strEndDate);
+        int MonthlyRegister(string strMonth);
     }
 
 }

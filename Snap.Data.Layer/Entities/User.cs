@@ -27,5 +27,6 @@ namespace Snap.Data.Layer.Entities
         public virtual Role Role { get; set; }
 
         public virtual Driver Driver { get; set; }
+        public virtual UserDetail UserDetail { get; set; }
     }
 }

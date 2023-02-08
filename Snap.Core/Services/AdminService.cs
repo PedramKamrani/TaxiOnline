@@ -837,6 +837,27 @@ namespace Snap.Core.Services
             return _context.Factors.Where(f => f.RefNumber != null && f.Date.Substring(5, 2) == month && f.Date.Substring(0, 4) == strYear).ToList().Sum(f => f.Price);
         }
 
+        public int WeeklyRegister(string date)
+        {
+            if (!_context.Users.Include(f => f.UserDetail).Any(f => f.IsActive == true && f.UserDetail.Date == date))
+            {
+                return 0;
+            }
+
+            return _context.Users.Include(f => f.UserDetail).Where(f => f.IsActive == true && f.UserDetail.Date == date).ToList().Count();
+        }
+
+        public int MonthlyRegister(string month)
+        {
+            string strYear = DateTimeGenerators.ShamsiDate().Substring(0, 4);
+
+            if (!_context.Users.Include(f => f.UserDetail).Any(f => f.IsActive == true && f.UserDetail.Date.Substring(5, 2) == month && f.UserDetail.Date.Substring(0, 4) == strYear))
+            {
+                return 0;
+            }
+
+            return _context.Users.Include(f => f.UserDetail).Where(f => f.IsActive == true && f.UserDetail.Date.Substring(5, 2) == month && f.UserDetail.Date.Substring(0, 4) == strYear).ToList().Count();
+        }
 
         #endregion
 
