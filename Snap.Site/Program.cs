@@ -38,6 +38,7 @@ builder.Services.AddAuthentication(op =>
 });
 
 #endregion
+
 var app = builder.Build();
 app.UseStaticFiles();
 app.MapGet("/", () => "Hello World!");

@@ -147,6 +147,14 @@ namespace Snap.Core.Interface
 
         #endregion
 
+        #region Report
+
+        Task<int> WeeklyFactor(string date);
+
+        int MonthlyFactor(string month);
+
+        #endregion
+
 
     }
 

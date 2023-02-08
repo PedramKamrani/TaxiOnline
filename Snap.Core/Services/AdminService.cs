@@ -812,6 +812,30 @@ namespace Snap.Core.Services
 
             
         }
+        #endregion
+
+        #region Report
+
+        public async Task<int> WeeklyFactor(string date)
+        {
+            var factor =await _context.Factors.AnyAsync(x => x.Date == date);
+            if (!factor)
+                return 0; 
+            var res= _context.Factors.Where(x=> x.Date==date).ToListAsync().Result;
+            return res.Sum(c=>c.Price);
+        }
+
+        public int MonthlyFactor(string month)
+        {
+            string strYear = DateTimeGenerators.ShamsiDate().Substring(0, 4);
+
+            if (!_context.Factors.Any(f => f.RefNumber != null && f.Date.Substring(5, 2) == month && f.Date.Substring(0, 4) == strYear))
+            {
+                return 0;
+            }
+
+            return _context.Factors.Where(f => f.RefNumber != null && f.Date.Substring(5, 2) == month && f.Date.Substring(0, 4) == strYear).ToList().Sum(f => f.Price);
+        }
 
 
         #endregion

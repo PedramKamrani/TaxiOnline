@@ -17,9 +17,9 @@
 
     <link href="~/css/font-awesome.min.css" rel="stylesheet" />
 
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/earlyaccess/droidarabickufi.css' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/earlyaccess/droidarabickufi.css' rel='stylesheet' type='text/css'>
 
     <link href="~/css/dashboard/pe-icon-7-stroke.css" rel="stylesheet" />
 </head>
@@ -37,45 +37,57 @@
 
                 <ul class="nav">
                     <li class="active">
-                        <a href="~/Panel/Dashboard">
+                        <a href="#">
                             <i class="pe-7s-graph"></i>
                             <p>داشبورد</p>
                         </a>
                     </li>
                     <li>
-                        <a href="user.html">
+                        <a href="/user">
                             <i class="pe-7s-user"></i>
+                            <p>کاربران</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/car">
+                            <i class="pe-7s-car"></i>
                             <p>خودرو ها</p>
                         </a>
                     </li>
                     <li>
-                        <a href="table.html">
+                        <a href="/pricetype">
                             <i class="pe-7s-note2"></i>
-                            <p>لیست</p>
+                            <p>تعرفه ثابت</p>
                         </a>
                     </li>
                     <li>
-                        <a href="typography.html">
+                        <a href="/humidity">
                             <i class="pe-7s-news-paper"></i>
-                            <p>تایپوگرافی</p>
+                            <p>تعرفه رطوبت</p>
                         </a>
                     </li>
                     <li>
-                        <a href="/Role">
-                            <i class="pe-7s-key"></i>
-                            <p>نقش ‌ها</p>
+                        <a href="/temperature">
+                            <i class="pe-7s-science"></i>
+                            <p>تعرفه دما</p>
                         </a>
                     </li>
                     <li>
-                        <a href="maps.html">
+                        <a href="/monthtype">
                             <i class="pe-7s-map-marker"></i>
-                            <p>نقشه ها</p>
+                            <p>تعرفه زمان</p>
                         </a>
                     </li>
                     <li>
-                        <a href="notifications.html">
-                            <i class="pe-7s-bell"></i>
-                            <p>اعلانات</p>
+                        <a href="/role">
+                            <i class="pe-7s-key"></i>
+                            <p>نقش ها</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/discount">
+                            <i class="pe-7s-crop"></i>
+                            <p>کوپن های تخفیف</p>
                         </a>
                     </li>
                     <li class="active-pro">
@@ -103,7 +115,7 @@
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="/Panel/Dashboard" class="dropdown-toggle" data-toggle="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-dashboard"></i>
                                 </a>
                             </li>
@@ -394,7 +406,7 @@
             </ul>
             </nav>
             <p class="copyright pull-left">
-            ۱۳۹۵ &copy; راست‌به‌چپ شده توسط <a href="http://google.com">پدرام</a>
+            ۱۳۹۵ &copy; راست‌به‌چپ شده توسط <a href="http://mmnaderi.ir">محمد مهدی نادری</a>
             </p>
             </div>
             </footer>*@
@@ -412,9 +424,9 @@
     <script src="~/js/dashboard/light-bootstrap-dashboard.js"></script>
     <script src="~/js/dashboard/demo.js"></script>
 
-@await RenderSectionAsync("mySection", false)
+    @RenderSection("mySection", false)
 
-@*<script type="text/javascript">
+    @*<script type="text/javascript">
     $(document).ready(function () {
 
     demo.initChartist();
