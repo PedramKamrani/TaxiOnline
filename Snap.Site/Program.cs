@@ -4,10 +4,11 @@ using Snap.Core.Interface;
 using Snap.Core.Scope;
 using Snap.Core.Services;
 using Snap.Data.Layer.Context;
+using Snap.Site.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
-
+builder.Services.AddSignalR();
 #region  Context
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
@@ -42,6 +43,7 @@ builder.Services.AddAuthentication(op =>
 var app = builder.Build();
 app.UseStaticFiles();
 app.MapGet("/", () => "Hello World!");
+app.MapHub<ChatHub>("/chathub");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMvcWithDefaultRoute();

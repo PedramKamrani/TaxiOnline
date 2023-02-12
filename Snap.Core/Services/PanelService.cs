@@ -61,7 +61,7 @@ namespace Snap.Core.Services
             var factor = _context.Factors.SingleOrDefault(c => c.UserId == userid && c.BankName == null);
             if (factor != null)
             {
-                factor.OrderNumber=orderNumber;
+                factor.OrderNumber = orderNumber;
                 factor.Price = Convert.ToInt32(price);
                 _context.SaveChanges();
                 return true;
@@ -72,7 +72,7 @@ namespace Snap.Core.Services
 
         public Guid GetFactorById(string orderNumber)
         {
-            return  _context.Factors.SingleOrDefault(x => x.OrderNumber == orderNumber).Id;
+            return _context.Factors.SingleOrDefault(x => x.OrderNumber == orderNumber).Id;
         }
 
         public void UpdatePayment(Guid id, string date, string time, string desc, string bank, string trace, string refId)
@@ -94,6 +94,44 @@ namespace Snap.Core.Services
             return await _context.Factors.FindAsync(id);
         }
 
+
+        #endregion
+
+        #region Price
+
+        public long GetPriceType(double id)
+        {
+            var priceType = _context.PriceTypes.FirstOrDefault(x => x.Start >= id && x.End <= id);
+            if (priceType == null)
+                return 0;
+            return priceType.Price;
+        }
+        public float GetTempPercent(double id)
+        {
+            var temp = _context.Temperatures.FirstOrDefault(x => x.End >= id && x.Start <= id);
+
+            if (temp == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToSingle(temp.Precent / 100);
+            }
+        }
+        public float GetHumidityPercent(double id)
+        {
+            var hum = _context.Humidities.FirstOrDefault(x => x.End >= id && x.Start <= id);
+
+            if (hum == null)
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToSingle(hum.Precent / 100);
+            }
+        }
 
         #endregion
     }

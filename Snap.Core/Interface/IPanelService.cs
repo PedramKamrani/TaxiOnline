@@ -16,5 +16,12 @@ namespace Snap.Core.Interface
         void UpdatePayment(Guid id, string date, string time, string desc, string bank, string trace, string refId);
         Task<Factor> GetFactor(Guid id);
         #endregion
+
+        #region Price
+        long GetPriceType(double id);
+        float GetTempPercent(double id);
+        float GetHumidityPercent(double id);
+
+        #endregion
     }
 }

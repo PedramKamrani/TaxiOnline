@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Snap.Core.Generators;
 using Snap.Core.Interface;
 using Snap.Core.ViewModels;
+using Snap.Core.ViewModels.Panel;
 using Snap.Core.ViewModels.Payment;
 using Snap.Data.Layer.Entities;
 using System.Text;
@@ -23,7 +24,24 @@ namespace Snap.Site.Controllers
         {
             return View();
         }
+        //public async Task<IActionResult> TestApi()
+        //{
+        //    var client = new HttpClient();
+        //    client.BaseAddress = new Uri("https://api.openweathermap.org");
+        //    var response = await client.GetAsync($"/data/2.5/weather?lat=38&lon=52&appid=42322586b8ce663c2f1db0a19ecc0d72");
 
+        //    var result = await response.Content.ReadAsStringAsync();
+
+        //    var obj = JsonConvert.DeserializeObject<dynamic>(result);
+
+        //    WeatherViewModel viewModel = new WeatherViewModel()
+        //    {
+        //        Temp = Math.Round(((float)obj.main.temp * 9 / 5 - 459.67), 2),
+        //        Hum = Math.Round(((float)obj.main.humidity), 2)
+        //    };
+
+        //    return Content(viewModel.Hum + " | " + viewModel.Temp);
+        //}
         public async Task<IActionResult> UserProfile()
         {
             var result = await _panel.GetUserDetailsAsync(User.Identity.Name);
@@ -248,6 +266,40 @@ namespace Snap.Site.Controllers
         //    return Redirect("/Panel/ResultPayment/" + factorID);
 
         //}
+
+        public IActionResult ConfirmRequest(double id)
+        {
+            long price = _panel.GetPriceType(id);
+
+            var client = new HttpClient();
+
+            client.BaseAddress = new Uri("https://api.openweathermap.org");
+            var response = await client.GetAsync($"/data/2.5/weather?lat=38&lon=52&units=metric&appid=42322586b8ce663c2f1db0a19ecc0d72");
+
+            var result = await response.Content.ReadAsStringAsync();
+            var obj = JsonConvert.DeserializeObject<dynamic>(result);
+
+            WeatherViewModel viewModel = new WeatherViewModel()
+            {
+                Hum = Math.Round((float)obj.main.humidity),
+                Temp = Math.Round((float)obj.main.temp)
+            };
+
+            double humC = Convert.ToDouble(((viewModel.Hum) - 32) * (0.555));
+
+            float tempPercent = _panel.GetTempPercent(viewModel.Temp);
+            float humPercent = _panel.GetHumidityPercent(humC);
+
+            price = Convert.ToInt64(price + (price * tempPercent));
+            price = Convert.ToInt64(price + (price * humPercent));
+
+            PriceConfirmViewModel priceConfirm = new PriceConfirmViewModel()
+            {
+                Price = price
+            };
+
+            return View(priceConfirm);
+        }
 
     }
 }

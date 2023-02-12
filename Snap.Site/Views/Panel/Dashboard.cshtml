@@ -1,47 +1,117 @@
 ﻿@{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "اسنپ تاکسی";
     Layout = "~/Views/Shared/_Site.cshtml";
 }
 
 
+
 <div id="map"></div>
 
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="bodyModal">
+            </div>
+        </div>
+    </div>
+</div>
 
 @section mySection
-{
+    {
+
+    <link href="~/map/leaflet.css" rel="stylesheet" />
+    <script src="~/map/leaflet.js"></script>
 
     <script>
 
-    var mapOptions = {
-        center: [20, 80],
-        zoom: 15
-    }
+        function ConvertNumericToRad(Value) {
+            return Value * Math.PI / 180;
+        }
 
-        var map = new L.map('map', mapOptions);
+        var lat1;
+        var lon1;
 
-    var layer = new L.TileLayer('https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png');
+        var lat2;
+        var lon2;
 
-    map.addLayer(layer);
+        var R = 6371;
 
-    var iconOptions = {
-        iconUrl: '/img/001.png',
-        iconSize: [50, 50]
-    }
+        // تابع مارکر مبدا
+        function myLocation(e) {
+            L.marker(
+                e.latlng,
+                {
+                    icon: FirstIcon,
+                    draggable: true
+                }
+            ).addTo(map);
 
-    var firstIcon = L.icon(iconOptions);
+            lat1 = e.latlng.lat;
+            lon1 = e.latlng.lng;
 
-    var markerOptions = {
-        title: "First",
-        clickable: true,
-        draggable: true,
-        icon: firstIcon
-    }
+        }
 
-    var marker = L.marker([20, 80], markerOptions);
+        //تابع کلیک و مختصات
+        function myClick(e) {
+            L.marker(
+                e.latlng,
+                {
+                    icon: SecondIcon,
+                    draggable:true,
+                   // moveend:
+                }
+            ).addTo(map);
 
+            lat2 = e.latlng.lat;
+            lon2 = e.latlng.lng;
 
-    marker.addTo(map);
+            var myLat = ConvertNumericToRad(lat2 - lat1);
+            var myLng = ConvertNumericToRad(lon2 - lon1);
 
-</script>
+            var fLat1 = ConvertNumericToRad(lat1);
+            var fLat2 = ConvertNumericToRad(lat2);
+
+            var a = Math.sin(myLat / 2) * Math.sin(myLat / 2) +
+                Math.sin(myLng / 2) * Math.sin(myLng / 2) * Math.cos(fLat1) * Math.cos(fLat2);
+
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var d = R * c;
+
+            $.ajax({
+                url: "/Panel/ConfirmRequest/" + d,
+                type: "Get",
+                data: {}
+            }).done(function (result) {
+                $('#myModal').modal('show');
+                $('#bodyModal').html(result);
+            });
+        }
+
+        // نمایش ساده نقشه
+        var map = L.map('map').setView([32.200, 52.800], 8);
+        L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+        //محاسبه جایگاه مبدا
+        map.locate({ setView: true, maxZoom: 16 });
+        map.on('locationfound', myLocation);
+
+        // تغییر آیکون
+        var IconSetting = L.Icon.extend({
+            options: {
+                iconSize: [50, 50],
+                iconAnchor: [20, 35]
+            }
+        });
+
+        var FirstIcon = new IconSetting({ iconUrl: '/img/001.png' });
+        var SecondIcon = new IconSetting({ iconUrl: '/img/002.png' });
+
+        map.on('click', myClick);
+    </script>
 
 }
