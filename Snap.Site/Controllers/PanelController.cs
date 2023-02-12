@@ -267,7 +267,7 @@ namespace Snap.Site.Controllers
 
         //}
 
-        public IActionResult ConfirmRequest(double id)
+        public async Task<IActionResult> ConfirmRequest(double id)
         {
             long price = _panel.GetPriceType(id);
 
