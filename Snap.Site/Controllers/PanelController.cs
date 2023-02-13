@@ -301,5 +301,10 @@ namespace Snap.Site.Controllers
             return View(priceConfirm);
         }
 
+        public IActionResult Chat()
+        {
+            return View();
+        }
+
     }
 }
