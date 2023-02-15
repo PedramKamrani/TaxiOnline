@@ -23,5 +23,19 @@ namespace Snap.Core.Interface
         float GetHumidityPercent(double id);
 
         #endregion
+
+        #region Transact
+
+        Transact AddTransact(TransactViewModel viewModel);
+        void UpdatePayment(Guid id);
+        void UpdateRate(Guid id, int rate);
+        Task<Transact> GetTransactById(Guid id);
+        Task<List<Transact>> GetUserTransacts(Guid id);
+        Task<List<Transact>> GetDriverTransacts(Guid id);
+        void UpdateDriver(Guid id, Guid driverId);
+        void UpdateDriverRate(Guid id, bool rate);
+        void UpdateStatus(Guid id, int status);
+
+        #endregion
     }
 }

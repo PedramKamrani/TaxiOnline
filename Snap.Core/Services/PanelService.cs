@@ -133,6 +133,94 @@ namespace Snap.Core.Services
             }
         }
 
+
+        #endregion
+
+        #region Transact
+
+        public  Transact AddTransact(TransactViewModel viewModel)
+        {
+            var model = new Transact
+            {
+                Id = CodeGenerators.GetId(),
+                Date = DateTimeGenerators.ShamsiDate(),
+                StartTime = DateTimeGenerators.ShamsiTime(),
+                Discount = 0,
+                DriverId = null,
+                DriverRate = false,
+                EndAddress = viewModel.EndAddress,
+                EndLat = viewModel.EndLat,
+                EndLng = viewModel.EndLng,
+                EndTime = null,
+                Fee = viewModel.Fee,
+                Total = viewModel.Fee,
+                IsCash = false,
+                Rate = 0,
+                StartAddress = viewModel.StartAddress,
+                StartLat = viewModel.StartLat,
+                StartLng = viewModel.StartLng,
+                Status = 0,
+                UserId = viewModel.UserId
+            };
+            _context.Add(model);
+            _context.SaveChanges();
+            return model;
+        }
+
+        public void UpdatePayment(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateRate(Guid id, int rate)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            transact.Rate = rate;
+            _context.SaveChanges();
+        }
+
+        public async Task<Transact> GetTransactById(Guid id)
+        {
+            return await _context.Transacts.FindAsync(id);
+        }
+
+        public async Task<List<Transact>> GetUserTransacts(Guid id)
+        {
+            return await _context.Transacts.Where(x => x.UserId == id && x.Status == 2).OrderByDescending(x => x.Date)
+                .ToListAsync();
+        }
+
+        public async Task<List<Transact>> GetDriverTransacts(Guid id)
+        {
+            return await _context.Transacts.Where(x => x.DriverId == id && x.Status == 2).OrderByDescending(x => x.Date)
+                .ToListAsync();
+        }
+
+        public void UpdateDriver(Guid id, Guid driverId)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            transact.DriverId = driverId;
+            _context.SaveChanges();
+        }
+
+        public void UpdateDriverRate(Guid id, bool rate)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            transact.DriverRate = rate;
+            _context.SaveChanges();
+        }
+
+        public void UpdateStatus(Guid id, int status)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            transact.Status = status;
+            _context.SaveChanges();
+        }
+
         #endregion
     }
 }

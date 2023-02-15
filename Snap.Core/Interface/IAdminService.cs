@@ -152,12 +152,20 @@ namespace Snap.Core.Interface
         Task<int> WeeklyFactor(string date);
 
         int MonthlyFactor(string month);
+        int WeeklyRegister(string strEndDate);
+        int MonthlyRegister(string strMonth);
+        #endregion
+
+        #region Transact
+
+        Task<List<Transact>> GetAllTransact();
+        void DeleteTransact(Guid id);
+        Task<List<TransactRate>> GetAllTransactRate(Guid id);
 
         #endregion
 
 
-        int WeeklyRegister(string strEndDate);
-        int MonthlyRegister(string strMonth);
+
     }
 
 }

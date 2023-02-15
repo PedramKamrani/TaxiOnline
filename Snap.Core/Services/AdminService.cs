@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Formats.Asn1;
+using Microsoft.EntityFrameworkCore;
 using Snap.Core.Generators;
 using Snap.Core.Interface;
 using Snap.Core.ViewModels.Admin;
@@ -858,6 +859,31 @@ namespace Snap.Core.Services
 
             return _context.Users.Include(f => f.UserDetail).Where(f => f.IsActive == true && f.UserDetail.Date.Substring(5, 2) == month && f.UserDetail.Date.Substring(0, 4) == strYear).ToList().Count();
         }
+        #endregion
+
+        #region Transact
+        public async Task<List<Transact>> GetAllTransact()
+        {
+            return await _context.Transacts.OrderByDescending(x => x.Date).ThenByDescending(x => x.StartTime)
+                .ToListAsync();
+        }
+
+        public void DeleteTransact(Guid id)
+        {
+            var transact = _context.Transacts.Find(id);
+            if (transact != null)
+            {
+                _context.Remove(transact);
+               _context.SaveChanges();
+            }
+        }
+
+        public async Task<List<TransactRate>> GetAllTransactRate(Guid id)
+        {
+            return await _context.TransactRates.Where(x => x.TransactId == id).ToListAsync();
+        }
+
+
 
         #endregion
 
@@ -869,5 +895,6 @@ namespace Snap.Core.Services
         }
 
         #endregion
+        
     }
 }

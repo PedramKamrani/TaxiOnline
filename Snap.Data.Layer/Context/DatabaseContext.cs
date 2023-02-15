@@ -24,5 +24,7 @@ namespace Snap.Data.Layer.Context
         public DbSet<Temperature> Temperatures { get; set; }
         public DbSet<Factor> Factors { get; set; }
         public DbSet<Discount> Discounts { get; set; }
+        public DbSet<Transact> Transacts { get; set; }
+        public DbSet<TransactRate> TransactRates { get; set; }
     }
 }
