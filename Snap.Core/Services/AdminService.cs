@@ -588,7 +588,10 @@ namespace Snap.Core.Services
             }
 
         }
-
+        public async Task<User> GetUserById(Guid id)
+        {
+            return _context.Users.Find(id);
+        }
         public string GetRoleName(Guid roleId)
         {
             return _context.Roles.Find(roleId)?.Name ?? "";
@@ -753,6 +756,8 @@ namespace Snap.Core.Services
             return true;
         }
 
+       
+
         #endregion
 
         #region  Discount
@@ -883,7 +888,42 @@ namespace Snap.Core.Services
             return await _context.TransactRates.Where(x => x.TransactId == id).ToListAsync();
         }
 
+        public async Task<List<Transact>> GetLastAllTransact()
+        {
+            return await _context.Transacts.OrderByDescending(c => c.Discount).ThenByDescending(x => x.StartTime)
+                .Take(6).ToListAsync();
+        }
 
+
+        public async Task<List<Transact>> FillTransactInProcess(string date)
+        {
+            return await _context.Transacts.Include(x => x.User).Where(x => x.Status == 1 && x.Date == date)
+                .OrderByDescending(x => x.StartTime).ToListAsync();
+        }
+
+        public async Task<List<Transact>> FillCancelTransact(string date)
+        {
+            return await _context.Transacts.Include(x => x.User).Where(x => x.Status == 3 && x.Date == date)
+                .OrderByDescending(x => x.StartTime).ToListAsync();
+        }
+
+        public async Task<List<Transact>> LastTransact()
+        {
+            return await _context.Transacts.Include(x => x.User).Where(x => x.Status == 2).OrderByDescending(x => x.Date).ThenByDescending(x => x.EndTime).Take(5).ToListAsync();
+        }
+
+
+        public int? WeeklyTransact(string date)
+        {
+            if (!_context.Transacts.Any(x => x.Status == 2 && x.Date == date))
+            {
+                return 0;
+            }
+            else
+            {
+                return Convert.ToInt32(_context.Transacts.Where(x => x.Status == 2 && x.Date == date).Sum(x => x.Total));
+            }
+        }
 
         #endregion
 

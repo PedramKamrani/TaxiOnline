@@ -129,9 +129,11 @@ namespace Snap.Core.Interface
       Task<Driver> GetDriver(Guid id);
       bool UpdateDriverCertificate(Guid id, DriverImgViewModel viewModel);
       bool UpdateDriverCar(Guid id, DriverCarViewModel viewModel);
+
+     Task<User> GetUserById(Guid id);
         #endregion
 
-       
+
 
         #region Discount
 
@@ -161,7 +163,12 @@ namespace Snap.Core.Interface
         Task<List<Transact>> GetAllTransact();
         void DeleteTransact(Guid id);
         Task<List<TransactRate>> GetAllTransactRate(Guid id);
+        Task<List<Transact>> GetLastAllTransact();
 
+        int? WeeklyTransact(string date);
+        Task<List<Transact>> LastTransact();
+        Task<List<Transact>> FillTransactInProcess(string date);
+        Task<List<Transact>> FillCancelTransact(string date);
         #endregion
 
 
