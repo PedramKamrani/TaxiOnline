@@ -16,6 +16,8 @@ namespace Snap.Site.ViewComponents.CancelTransacComponent
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
+
+
             string strToday = pc.GetYear(DateTime.Now).ToString("0000") + "/" +
                 pc.GetMonth(DateTime.Now).ToString("00") + "/" + pc.GetDayOfMonth(DateTime.Now).ToString("00");
 
