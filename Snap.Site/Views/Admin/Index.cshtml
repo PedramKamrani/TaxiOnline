@@ -1,4 +1,23 @@
 ﻿@{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "پیشخوان مدیریتی";
     Layout = "~/Views/Shared/_dashboardLayout.cshtml";
 }
+
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+    @(await Component.InvokeAsync("WeeklyTransactComponent"))
+
+</div>
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
+    @await Component.InvokeAsync("TransacInProcessComponent")
+
+</div>
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    @await Component.InvokeAsync("CancelTransacComponent")
+
+</div>
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+    @(await Component.InvokeAsync("LastTransactComponent"))
+
+</div>

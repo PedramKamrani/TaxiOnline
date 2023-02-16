@@ -1,0 +1,14 @@
+﻿@using Stimulsoft.Report.Mvc
+
+@{
+    ViewData["Title"] = "گزارش دوم";
+}
+
+@Html.StiNetCoreViewer(new StiNetCoreViewerOptions()
+{
+    Actions =
+    {
+        GetReport = "Print",
+        ViewerEvent = "ViewerEvent"
+    }
+})

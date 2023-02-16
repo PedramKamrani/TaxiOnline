@@ -1,1 +1,48 @@
 ﻿
+@model IEnumerable<Snap.Data.Layer.Entities.Transact>
+
+@using Snap.Core.Scope;
+
+@inject TransactScope _tscope;
+
+<div class="header">
+    <h4 class="title pull-right">نمایش 5 سفر آخر</h4>
+    <h4 class="title pull-left">
+    </h4>
+    <div class="clearfix"></div>
+</div>
+<div class="content table-responsive table-full-width">
+    <table class="table table-hover table-striped">
+        <thead>
+        <tr>
+            <th>
+                ساعت
+            </th>
+            <th>
+                مسافر
+            </th>
+            <th>
+                راننده
+            </th>
+            <th>
+                جمع کل
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            string driverName = _tscope.GetUserById((Guid)item.DriverId).UserName;
+
+            <tr>
+                <td>@Html.DisplayFor(model => item.StartTime)</td>
+                <td>@Html.DisplayFor(model => item.User.UserName)</td>
+                <td>@driverName</td>
+                <td>@item.Total.ToString("n0") ریال</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+
+</div>
+

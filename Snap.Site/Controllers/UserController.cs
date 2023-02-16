@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Snap.Core.Interface;
+using Snap.Core.ViewModels;
 using Snap.Core.ViewModels.Admin;
+using Stimulsoft.Base;
+using Stimulsoft.Report;
+using Stimulsoft.Report.Mvc;
 
 namespace Snap.Site.Controllers
 {
@@ -11,6 +15,7 @@ namespace Snap.Site.Controllers
 
         public UserController(IAdminService service)
         {
+            StiLicense.LoadFromString("6vJhGtLLLz2GNviWmUTrhSqnOItdDwjBylQzQcAOiHl2AD0gPVknKsaW0un+3PuM6TTcPMUAWEURKXNso0e5OJN40hxJjK5JbrxU+NrJ3E0OUAve6MDSIxK3504G4vSTqZezogz9ehm+xS8zUyh3tFhCWSvIoPFEEuqZTyO744uk+ezyGDj7C5jJQQjndNuSYeM+UdsAZVREEuyNFHLm7gD9OuR2dWjf8ldIO6Goh3h52+uMZxbUNal/0uomgpx5NklQZwVfjTBOg0xKBLJqZTDKbdtUrnFeTZLQXPhrQA5D+hCvqsj+DE0n6uAvCB2kNOvqlDealr9mE3y978bJuoq1l4UNE3EzDk+UqlPo8KwL1XM+o1oxqZAZWsRmNv4Rr2EXqg/RNUQId47/4JO0ymIF5V4UMeQcPXs9DicCBJO2qz1Y+MIpmMDbSETtJWksDF5ns6+B0R7BsNPX+rw8nvVtKI1OTJ2GmcYBeRkIyCB7f8VefTSOkq5ZeZkI8loPcLsR4fC4TXjJu2loGgy4avJVXk32bt4FFp9ikWocI9OQ7CakMKyAF6Zx7dJF1nZw");
             _service = service;
         }
 
@@ -19,6 +24,47 @@ namespace Snap.Site.Controllers
             var model = await _service.GetUsers();
             return View(model);
         }
+
+        #region Reports
+
+        public IActionResult ShowPrint()
+        {
+            return View("ShowPrint");
+        }
+
+        public IActionResult Print()
+        {
+            StiReport report = new StiReport();
+
+            report.Load(StiNetCoreHelper.MapPath(this, "wwwroot/reports/Report2.mrt"));
+
+            var users = _service.GetUsers().Result;
+
+            List<Report2ViewModel> report2s = new List<Report2ViewModel>();
+
+            foreach (var item in users)
+            {
+                Report2ViewModel report2 = new Report2ViewModel()
+                {
+                    NationalCode = "ندارد",
+                    BirthDate = item.UserDetail.BirthDate,
+                    FullName = item.UserDetail.Fullname,
+                    Username = item.UserName
+                };
+
+                report2s.Add(report2);
+            }
+
+            report.RegData("dt2", report2s);
+            return StiNetCoreViewer.GetReportResult(this, report);
+        }
+
+        public IActionResult ViewerEvent()
+        {
+            return StiNetCoreViewer.ViewerEventResult(this);
+        }
+
+        #endregion
 
         public async Task<IActionResult> Create()
         {

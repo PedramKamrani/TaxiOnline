@@ -9,6 +9,12 @@ using Snap.Site.Hubs;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMvc(options => options.EnableEndpointRouting = false);
 builder.Services.AddSignalR();
+
+    builder.Services.Configure<IISServerOptions>(options =>
+{
+    options.AllowSynchronousIO = true;
+});
+
 #region  Context
 builder.Services.AddDbContext<DatabaseContext>(options =>
 {
