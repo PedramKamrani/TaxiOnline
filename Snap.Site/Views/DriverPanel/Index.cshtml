@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Snap.Data.Layer.Entities.Transact>
+
+@{
+    ViewData["Title"] = "داشبورد راننده";
+    Layout = "~/Views/Shared/_Site.cshtml";
+
+
+    var trans = Model.FirstOrDefault();
+}
+
+@if (trans != null)
+{
+<div class="row">
+    <div class="col-12" id="map" style="max-height: 200px"></div>
+    <div class="col-12">
+        <h3>هزینه سفر : @trans.Total.ToString("n0") ریال</h3>
+    </div>
+    <div class="col-12">
+        <a class="btn btn-success btn-block" href="/driverpanel/UpdateStatus/@trans.Id">
+            شروع سفر
+        </a>
+    </div>
+</div>
+    @section mySection
+{
+
+        <link href="~/map/leaflet.css" rel="stylesheet" />
+        <script src="~/map/leaflet.js"></script>
+
+        <script>
+
+        var lattt1 = @trans.StartLat;
+        var lattt2 = @trans.EndLat;
+
+        var lnggg1 = @trans.StartLng;
+            var lnggg2 = @trans.EndLng;
+
+
+            // نمایش ساده نقشه
+            var map = L.map('map').setView([lattt1, lnggg1], 15);
+            L.tileLayer('https://a.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+            // تغییر آیکون
+            var IconSetting = L.Icon.extend({
+                options: {
+                    iconSize: [50, 50],
+                    iconAnchor: [20, 35]
+                }
+            });
+
+            var FirstIcon = new IconSetting({ iconUrl: '/img/001.png' });
+            var SecondIcon = new IconSetting({ iconUrl: '/img/002.png' });
+
+            var marker = L.marker(
+            new L.LatLng(lattt1, lnggg1),
+            {
+                icon: FirstIcon
+            }
+            ).addTo(map);
+
+            var marker = L.marker(
+                new L.LatLng(lattt2, lnggg2),
+                {
+                    icon: SecondIcon
+                }
+            ).addTo(map);
+
+        </script>
+
+    }
+}
+
+
+    @if (trans == null)
+    {
+        <script>
+
+
+            setInterval(function () {
+                location.reload();
+            }, 3000)
+        </script>
+    }

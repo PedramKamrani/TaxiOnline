@@ -26,7 +26,7 @@ namespace Snap.Core.Interface
 
         #region Transact
 
-        Transact AddTransact(TransactViewModel viewModel);
+        void AddTransact(Transact viewModel);
         void UpdatePayment(Guid id);
         void UpdateRate(Guid id, int rate);
         Task<Transact> GetTransactById(Guid id);
@@ -37,5 +37,11 @@ namespace Snap.Core.Interface
         void UpdateStatus(Guid id, int status);
 
         #endregion
+
+        Guid GetUserId(string? identityName);
+        User GetUser(string? identityName);
+        Guid? ExistsUserTransact(Guid userId);
+        Transact GetUserTransact(Guid transactId);
+        List<Transact> GetTransactsNotAccept();
     }
 }

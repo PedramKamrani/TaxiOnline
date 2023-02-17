@@ -1,27 +1,30 @@
-﻿@{
+﻿@model Snap.Core.ViewModels.DashboardViewModel
+
+@{
     ViewData["Title"] = "اسنپ تاکسی";
     Layout = "~/Views/Shared/_Site.cshtml";
 }
 
 
+@if (Model.Status == -1)
+{
+    <div id="map"></div>
 
-<div id="map"></div>
-
-<div id="myModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" id="bodyModal">
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="bodyModal">
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-@section mySection
+    @section mySection
     {
 
     <link href="~/map/leaflet.css" rel="stylesheet" />
@@ -61,9 +64,7 @@
             L.marker(
                 e.latlng,
                 {
-                    icon: SecondIcon,
-                    draggable:true,
-                   // moveend:
+                    icon: SecondIcon
                 }
             ).addTo(map);
 
@@ -83,7 +84,7 @@
             var d = R * c;
 
             $.ajax({
-                url: "/Panel/ConfirmRequest/" + d,
+                url: "/Panel/ConfirmRequest/" + d + '?lat1=' + lat1 + '&lat2=' + lat2 + '&lng1=' + lon1 + '&lng2=' + lon2,
                 type: "Get",
                 data: {}
             }).done(function (result) {
@@ -114,4 +115,26 @@
         map.on('click', myClick);
     </script>
 
+    }
+}
+else
+{
+    if (Model.Status == 0)
+    {
+        <h2>سفر شما در انتظار تأیید راننده است</h2>
+
+        <br />
+
+        <img src="~/img/570726f9398849aa200fbcba9466f9f2.gif" alt="snapp" class="img-fluid" />
+
+        <br />
+
+        <a class="btn btn-danger btn-block" href="/panel/UpdateStatus/@Model.TransactId">
+            لغو درخواست
+        </a>
+    }
+    else
+    {
+
+    }
 }

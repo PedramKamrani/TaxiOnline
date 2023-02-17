@@ -138,33 +138,12 @@ namespace Snap.Core.Services
 
         #region Transact
 
-        public  Transact AddTransact(TransactViewModel viewModel)
+        public  void AddTransact(Transact viewModel)
         {
-            var model = new Transact
-            {
-                Id = CodeGenerators.GetId(),
-                Date = DateTimeGenerators.ShamsiDate(),
-                StartTime = DateTimeGenerators.ShamsiTime(),
-                Discount = 0,
-                DriverId = null,
-                DriverRate = false,
-                EndAddress = viewModel.EndAddress,
-                EndLat = viewModel.EndLat,
-                EndLng = viewModel.EndLng,
-                EndTime = null,
-                Fee = viewModel.Fee,
-                Total = viewModel.Fee,
-                IsCash = false,
-                Rate = 0,
-                StartAddress = viewModel.StartAddress,
-                StartLat = viewModel.StartLat,
-                StartLng = viewModel.StartLng,
-                Status = 0,
-                UserId = viewModel.UserId
-            };
-            _context.Add(model);
+            
+            
+            _context.Add(viewModel);
             _context.SaveChanges();
-            return model;
         }
 
         public void UpdatePayment(Guid id)
@@ -219,6 +198,46 @@ namespace Snap.Core.Services
 
             transact.Status = status;
             _context.SaveChanges();
+        }
+
+        public Guid GetUserId(string? identityName)
+        {
+            return _context.Users.FirstOrDefault(x => x.UserName == identityName).Id;
+        }
+
+        public User GetUser(string? identityName)
+        {
+            return _context.Users.FirstOrDefault(x => x.UserName == identityName);
+        }
+
+        public Guid? ExistsUserTransact(Guid userId)
+        {
+            // 0 == Create
+            // 1 == Driver
+            // 2 == Success
+            // 3 == Cancel
+
+            Transact transact = _context.Transacts.FirstOrDefault(x => x.UserId == userId && (x.Status == 0 || x.Status == 1));
+
+            if (transact != null)
+            {
+                return transact.Id;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public Transact GetUserTransact(Guid transactId)
+        {
+            return _context.Transacts.Find(transactId);
+        }
+
+
+        public List<Transact> GetTransactsNotAccept()
+        {
+            return _context.Transacts.Where(x => x.Status == 0).OrderByDescending(x => x.Date).ToList();
         }
 
         #endregion

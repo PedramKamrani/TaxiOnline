@@ -22,7 +22,29 @@ namespace Snap.Site.Controllers
         }
         public IActionResult Dashboard()
         {
-            return View();
+            User user = _panel.GetUser(User.Identity.Name);
+
+            Guid? transactID = _panel.ExistsUserTransact(user.Id);
+
+            int status = -1;
+            Guid? driverID = null;
+
+            if (transactID != null)
+            {
+                Transact transact = _panel.GetUserTransact((Guid)transactID);
+
+                status = transact.Status;
+                driverID = transact.DriverId;
+            }
+
+            DashboardViewModel dashboard = new DashboardViewModel()
+            {
+                DriverId = driverID,
+                UserId = user.Id,
+                TransactId = transactID,
+                Status = status
+            };
+            return View(dashboard);
         }
         //public async Task<IActionResult> TestApi()
         //{
@@ -267,7 +289,7 @@ namespace Snap.Site.Controllers
 
         //}
 
-        public async Task<IActionResult> ConfirmRequest(double id)
+        public async Task<IActionResult> ConfirmRequest(double id, string lat1, string lat2, string lng1, string lng2)
         {
             long price = _panel.GetPriceType(id);
 
@@ -293,12 +315,58 @@ namespace Snap.Site.Controllers
             price = Convert.ToInt64(price + (price * tempPercent));
             price = Convert.ToInt64(price + (price * humPercent));
 
-            PriceConfirmViewModel priceConfirm = new PriceConfirmViewModel()
+            TransactViewModel priceConfirm = new TransactViewModel()
             {
-                Price = price
+                Fee = price,
+                UserId = _panel.GetUserId(User.Identity.Name),
+
+                StartLat = lat1,
+                StartLng = lng1,
+                EndLng = lng2,
+                EndLat = lat2
             };
 
             return View(priceConfirm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ConfirmRequest(TransactViewModel viewModel)
+        {
+            User user = _panel.GetUser(User.Identity.Name);
+
+            bool isCash = true;
+
+            if (user.Wallet >= viewModel.Fee)
+            {
+                isCash = false;
+            }
+
+            Transact transact = new Transact()
+            {
+                Id = CodeGenerators.GetId(),
+                Date = DateTimeGenerators.ShamsiDate(),
+                Discount = 0,
+                DriverId = null,
+                DriverRate = false,
+                EndAddress = viewModel.EndAddress,
+                EndLat = viewModel.EndLat,
+                EndLng = viewModel.EndLng,
+                EndTime = null,
+                Fee = viewModel.Fee,
+                IsCash = isCash,
+                Rate = 0,
+                StartAddress = viewModel.StartAddress,
+                StartLat = viewModel.StartLat,
+                StartLng = viewModel.StartLng,
+                StartTime = null,
+                Status = 0,
+                Total = viewModel.Fee,
+                UserId = viewModel.UserId
+            };
+
+            _panel.AddTransact(transact);
+
+            return RedirectToAction("Dashboard");
         }
 
         public IActionResult Chat()
