@@ -200,6 +200,20 @@ namespace Snap.Core.Services
             _context.SaveChanges();
         }
 
+        public void UpdateStatus(Guid id, Guid? driverId, int status)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            transact.Status = status;
+
+            if (driverId != null)
+            {
+                transact.DriverId = driverId;
+            }
+
+            _context.SaveChanges();
+        }
+
         public Guid GetUserId(string? identityName)
         {
             return _context.Users.FirstOrDefault(x => x.UserName == identityName).Id;
@@ -238,6 +252,48 @@ namespace Snap.Core.Services
         public List<Transact> GetTransactsNotAccept()
         {
             return _context.Transacts.Where(x => x.Status == 0).OrderByDescending(x => x.Date).ToList();
+        }
+        public User GetUserById(Guid id)
+        {
+            return _context.Users.Include(x => x.UserDetail).FirstOrDefault(x => x.Id == id);
+        }
+
+        #endregion
+
+        #region Request
+
+        public Transact GetDriverConfrimTransact(Guid id)
+        {
+            return _context.Transacts.FirstOrDefault(x => x.DriverId == id && x.Status == 1);
+        }
+
+        public Transact GetUserConfrimTransact(Guid id)
+        {
+            return _context.Transacts.FirstOrDefault(x => x.UserId == id && x.Status == 1);
+        }
+
+        public void EndRequest(Guid id)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            if (transact.IsCash == false)
+            {
+                User user = _context.Users.Find(transact.UserId);
+
+                user.Wallet -= transact.Total;
+
+            }
+
+            transact.Status = 2;
+            _context.SaveChanges();
+        }
+
+        public void AddRate(Guid id, int rate)
+        {
+            Transact transact = _context.Transacts.Find(id);
+
+            transact.Rate = rate;
+            _context.SaveChanges();
         }
 
         #endregion

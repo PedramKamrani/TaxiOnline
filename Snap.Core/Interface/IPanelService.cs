@@ -1,4 +1,5 @@
-﻿using Snap.Core.ViewModels;
+﻿using Microsoft.EntityFrameworkCore;
+using Snap.Core.ViewModels;
 using Snap.Data.Layer.Entities;
 
 namespace Snap.Core.Interface
@@ -35,7 +36,7 @@ namespace Snap.Core.Interface
         void UpdateDriver(Guid id, Guid driverId);
         void UpdateDriverRate(Guid id, bool rate);
         void UpdateStatus(Guid id, int status);
-
+        public void UpdateStatus(Guid id, Guid? driverId, int status);
         #endregion
 
         Guid GetUserId(string? identityName);
@@ -43,5 +44,16 @@ namespace Snap.Core.Interface
         Guid? ExistsUserTransact(Guid userId);
         Transact GetUserTransact(Guid transactId);
         List<Transact> GetTransactsNotAccept();
+        User GetUserById(Guid id);
+        
+
+        #region Request
+
+        Transact GetDriverConfrimTransact(Guid id);
+        Transact GetUserConfrimTransact(Guid id);
+        void EndRequest(Guid id);
+        void AddRate(Guid id, int rate);
+
+        #endregion
     }
 }

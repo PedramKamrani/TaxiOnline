@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="Views\DriverPanel\Index.cshtml" />
     <None Include="wwwroot\ckeditor\.htaccess" />
     <None Include="wwwroot\ckeditor\adapters\jquery.js" />
     <None Include="wwwroot\ckeditor\build-config.js" />
